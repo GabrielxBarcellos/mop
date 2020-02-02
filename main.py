@@ -10,9 +10,6 @@ app = Flask(__name__)
 app.secret_key = 'lady'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-
-
 @app.route('/funcoes', methods=['POST'])
 def funcoes():
     setor = request.form['dado']
