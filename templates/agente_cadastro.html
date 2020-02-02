@@ -1,0 +1,173 @@
+{% extends 'layout.html' %}
+
+{%block conteudo%}
+
+<h1 class="red-text">Cadastro de operador</h1>
+<div class="section">
+    <form action="{{url_for('cadastrar_operador_post')}}"  method="POST" class="row formulario">
+      <div class="input-field col s2">
+        <input type="number" id="cadastro" name="cadastro" class="validate">
+        <label for="cadastro">CAD</label>
+      </div>
+      <div class="input-field col s10">
+        <input type="text" id="nome" name="nome" class="validate">
+        <label for="nome">Nome</label>
+      </div>
+      <div class="input-field col s4">
+        <input type="text" id="ramal" name="ramal" class="validate">
+        <label for="ramal">Ramal</label>
+      </div>
+      <div class="input-field col s2">
+        <select id='pausa' name="pausa">
+          <label>PAUSA</label>
+          <option value="" selected disabled>PAUSA</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='celular' name="celular">
+          <label>CELULAR</label>
+          <option value="" selected disabled>CELULAR</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='monitoria' name="monitoria">
+          <label>MONITORIA</label>
+          <option value="" selected disabled>MONITORIA</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='sabado' name="sabado">
+          <label>TRABALHA SABADO</label>
+          <option value="" selected disabled>TRABALHA SABADO</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='cc' name="cc">
+          <label>CC</label>
+          <option value="" selected>CC</option>
+          {% for item in ccs %}
+            <option value="{{item["CC"]}}">{{item["CC"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='nvl' name="nvl">
+          <label>NVL</label>
+          <option value="" selected disabled>NVL</option>
+          <option value="ADM">ADM</option>
+          <option value="AUX">AUX</option>
+          <option value="OPE">OPE</option>
+        </select>
+      </div>
+    <div class="input-field col s4">
+      <select id='setor' name="setor">
+        <label>Setor</label>
+        <option value="" selected>SETOR</option>
+        {% for item in setores %}
+          <option value="{{item["SETOR"]}}">{{item["SETOR"]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="input-field col s4">
+      <select id='funcao' name="funcao">
+        <option value="" selected>FUNCAO</option>
+      </select>
+    </div>
+    <div class="input-field col s3">
+      <select id='cargo' name="cargo">
+        <option value="" selected>CARGO</option>
+      </select>
+    </div>
+    <div class="input-field col s4">
+      <select id='gestor' name="gestor">
+        <label>Gestor</label>
+        <option value="" selected>GESTOR</option>
+        {% for item in gestores %}
+          <option value="{{item["NOME"]}}">{{item["NOME"]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="input-field col s3">
+      <select id='jornada' name="jornada">
+        <label>Jornada</label>
+        <option value="" selected>JORNADA</option>
+        {% for item in jornadas %}
+          <option value="{{item["JORNADA"]}}">{{item["JORNADA"]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="input-field col s2">
+      <select id='mes' name="mes">
+        <label>Meses</label>
+        <option value="" selected>MESES</option>
+        {% for item in meses %}
+          <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class=" btn-large btn waves-effect waves-light red right enviar" type="submit" >CADASTRAR
+      <i class="material-icons right">send</i>
+    </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script%}
+
+$('.enviar').click(function (e) {
+  event.preventDefault();
+  if (valida_form('.ignorar')) {
+      alert('teste')
+      $('.formulario').submit()
+  }
+})
+
+trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
+
+trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
+
+function trazer_option(select ,item_banco ,url_back, pai, pai2){
+  if (pai2 == null){
+    var el = pai
+  }else{
+    var el = pai2
+  }
+  $(el).change(function(){
+
+    if (pai2 == null){
+      var json = {dado:$(pai).val()}
+    }else{
+      var json = {dado:$(pai).val(), dado2:$(pai2).val()}
+    }
+    $.ajax({
+      url: url_back,
+      data: json,
+      type: 'POST',
+      success: function(response){
+        $( select + " .del" ).remove()
+        $.each(response, function(i,v){
+          var valor = v[item_banco]
+          console.log(valor)
+          var option = $('<option>',{
+            'val': valor,
+            'text':valor,
+            'class':'del'})
+          $(select).append(option)
+          
+          var elems = document.querySelectorAll('select');
+          var instances = M.FormSelect.init(elems);
+        })
+  
+      }
+  })
+  })
+}
+{% endblock %}

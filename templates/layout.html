@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>Mop</title>
+        <link href="static\materialize-v1.0.0\materialize\css\materialize.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" type="imagem/png" href="static\icon.png" />
+
+        <style>
+          .erro{
+            border-color: red !important; 
+          }
+        </style>
+    </head>
+    <body>
+        <!--menu side-->
+
+        <ul id="slide-out" class="sidenav">
+          <li><div class="brand-logo" style="padding: 0 32px;"><a href="{{url_for('home')}}"><h2 class="red-text">MOP</h2></a> </div></div></li>
+          <li><div class="divider"></div></li>
+          <li><a class="waves-effect waves-light"><i class="material-icons left">person</i>Usuário: </a></li>
+          <li><a class="waves-effect waves-light"><i class="material-icons left">power_settings_new</i>Deslogar</a></li>
+          <li><div class="divider"></div></li>
+          <li><a href="{{url_for('agentes')}}"><i class="material-icons left">people</i>Agentes</a></li>
+          <li><a><i class="material-icons left">thumbs_up_down</i>Solicitacoes de alteração</a></li>
+        </ul>
+        <div style="margin-top: 2em; margin-left: 2em;">
+          <a class="btn-floating btn-large red sidenav-trigger" data-target="slide-out" >
+            <i class="large material-icons">arrow_forward</i>
+          </a>
+        </div>
+        <!--fim  menu side-->
+        <!--container-->
+        <div class="container">
+
+        {% block conteudo %}
+        {% endblock %}
+
+
+      </div>
+      <footer class="center">
+        © 2020 Núcleo de controle
+      </footer>
+        <!--fim cointainer-->
+        <!--scripts-->
+        <script src="static\jquery-3.4.1.min.js"></script>
+        <script src="static\materialize-v1.0.0\materialize\js\materialize.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                option = ''
+                var elems = document.querySelectorAll('.sidenav');
+                var instances = M.Sidenav.init(elems);
+              });
+            
+              // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+              // var collapsibleElem = document.querySelector('.collapsible');
+              // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+            
+              // Or with jQuery
+            
+              $(document).ready(function(){
+                $('.sidenav').sidenav();
+              });
+
+
+              document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    
+    var instances = M.Datepicker.init(elems, {});
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker({format:'yyyy-mm-dd', });
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.fixed-action-btn').floatingActionButton();
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+  
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+        
+          
+  </script>
+          <script src="static\scripts.js"></script>
+<script>
+  {% block script %}{% endblock %}
+</script>
+    </body>
+
+</html>
