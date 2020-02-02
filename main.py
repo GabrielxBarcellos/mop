@@ -12,10 +12,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
-def lendo_dados():
-    with open("dados.json", "r") as read_file:
-        data = json.load(read_file)
-    return data
 
 @app.route('/funcoes', methods=['POST'])
 def funcoes():

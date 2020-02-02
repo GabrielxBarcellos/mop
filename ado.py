@@ -1,11 +1,18 @@
 import pyodbc
+import json
+
+def json_config():
+    with open("dados.json", "r") as read_file:
+        data = json.load(read_file)
+    return data
 
 
 def conn():
-    server = 'gbarcellossilva.database.windows.net'
-    database = 'SANDBOX'
-    username = 'gbarcellossilva'
-    password = 'Red-Hot1996'
+    credenciais = json_config()["conn"]
+    server = credenciais["server"]
+    database = credenciais["database"]
+    username = credenciais["username"]
+    password = credenciais["password"]
     cnxn = pyodbc.connect(
         'DRIVER={SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
     return cnxn

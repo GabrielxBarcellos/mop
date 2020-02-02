@@ -1,57 +1,8 @@
 {
-    "CAMPOS_MOP":[
-        "CAD",
-        "NOME",
-        "RAMAL",
-        "PAUSAS",
-        "CELULAR",
-        "MONITORIA",
-        "CC",
-        "SETOR",
-        "CARGO",
-        "FUNCAO",
-        "NVL",
-        "GESTOR",
-        "JORNADA",
-        "HRS",
-        "TURNO",
-        "SAB"
-    ],
-    "PAUSAS":[
-        "SIM",
-        "NÃO"
-    ],
-    "CELULAR":[
-        "SIM",
-        "NÃO"
-    ],
-    "MONITORIA":[
-        "SIM",
-        "NÃO"
-    ],
-    "CC":[
-        "5310",
-        "5314",
-        "5323",
-        "5324",
-        "5325",
-        "5367"
-    ],
-    "SETOR":{
-        "QUALIDADE" :{},
-        "CALL CENTER" :{},
-        "NUCLEO CONTROLE" :{},
-        "PRE-FATURAMENTO" :{},
-        "PROGRAMA ESTUDANTES" :{},
-        "SUPPLIER SERVICE" :{},
-        "POS-VENDAS" :{},
-        "ATACADO" : {
-            "ASSISTENTE COMERCIAL": "ASSISTENCIA",
-            "GER.COMERCIAL": "GERENCIA",
-            "ANALISTA COMERCIAL": "ANALISE COMERCIAL",
-            "OPER. DE TELEMARKETING":"VENDAS"}
-
+    "coon":{
+        "server":"gbarcellossilva.database.windows.net",
+        "database" : "SANDBOX",
+        "username" : "gbarcellossilva",
+        "password" : "Red-Hot1996"
     }
-    
-
 }
