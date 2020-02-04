@@ -26,9 +26,43 @@ def home():
     return render_template('home.html')
 
 @app.route('/agentes')
+
+@app.route('/cargos', methods=['POST','GET'])
 def agentes():
+
+    setores = controle.setor()
+    ccs = controle.cc()
+    gestores = controle.gestor()
+    jornadas = controle.jornada()
+    meses = controle.mes()
+
+    if request.method =='GET' :
+        mop = controle.mop()
+        return render_template('agentes.html',mop = mop , keys = mop[0].keys(), setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
+    
+
+    filtrado = controle.agente(
+        request.form['cadastro'],
+        request.form['nome'],
+        request.form['ramal'],
+        request.form['pausa'],
+        request.form['celular'],
+        request.form['monitoria'],
+        request.form['cc'],
+        request.form['setor'],
+        request.form['cargo'],
+        request.form['funcao'],
+        request.form['nvl'],
+        request.form['gestor'],
+        request.form['jornada'],
+        request.form['sabado'],
+        request.form['mes']
+    ).filtrar()
+
+    print(filtrado)
     mop = controle.mop()
-    return render_template('agentes.html',mop = mop , keys = mop[0].keys())
+    return render_template('agentes.html',mop = mop , keys = mop[0].keys(), setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
+
 
 @app.route('/cadastrar_operador')
 def cadastrar_operador():

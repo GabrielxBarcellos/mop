@@ -38,6 +38,39 @@ class agente():
                              )
         return ado.executar(SQL)
 
+    def filtrar(self):
+        elementos = [
+            ('CAD',self.cad), 
+            ('NOME',self.nome),
+            ('RAMAL',self.ramal),
+            ('PAUSAS',self.pausa),
+            ('CELULAR',self.celular),
+            ('MONITORIA',self.monitoria),
+            ('CC',self.cc),
+            ('SETOR',self.setor),
+            ('CARGO',self.cargo),
+            ('FUNCAO',self.funcao),
+            ('NVL',self.nvl),
+            ('GESTOR',self.gestor),
+            ('JORNADA',self.jornada)]
+
+        lista_somente_elemento_preenchido = []
+        
+        for e  in elementos:
+            if e[1] != None:
+                lista_somente_elemento_preenchido.append(e)
+        
+        filtro = ""
+
+        for campo in lista_somente_elemento_preenchido:
+            filtro = campo[0] + " = '" + campo[1] + "'," 
+        
+        filtro = filtro.sus[ :len(filtro) -1] 
+
+        return filtro
+        
+
+
 def mop():
     return ado.buscar( table="NC_MOP")
 

@@ -25,9 +25,6 @@ function valida_form(classe_ignora){
     }
 }
 
-
-
-
 function download_csv(csv_string){
     
     var universalBOM = "\uFEFF";
@@ -37,4 +34,41 @@ function download_csv(csv_string){
     window.document.body.appendChild(a);
     a.click();
 }
-download_csv(texto)
+
+
+function trazer_option(select ,item_banco ,url_back, pai, pai2){
+    if (pai2 == null){
+      var el = pai
+    }else{
+      var el = pai2
+    }
+    $(el).change(function(){
+  
+      if (pai2 == null){
+        var json = {dado:$(pai).val()}
+      }else{
+        var json = {dado:$(pai).val(), dado2:$(pai2).val()}
+      }
+      $.ajax({
+        url: url_back,
+        data: json,
+        type: 'POST',
+        success: function(response){
+          $( select + " .del" ).remove()
+          $.each(response, function(i,v){
+            var valor = v[item_banco]
+            console.log(valor)
+            var option = $('<option>',{
+              'val': valor,
+              'text':valor,
+              'class':'del'})
+            $(select).append(option)
+            
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+          })
+    
+        }
+    })
+    })
+  }
