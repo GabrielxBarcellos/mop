@@ -17,24 +17,24 @@ class agente():
         self.sab = sab
         self.mes_ano = mes_ano
 
-    def cadastrar(this):
+    def cadastrar(self):
         SQL = """INSERT INTO NC_MOP(CAD,NOME,RAMAL,PAUSAS,CELULAR,MONITORIA,CC,SETOR,CARGO,FUNCAO,NVL,GESTOR,JORNADA,SAB,MES_ANO) 
                              VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
-                                 this.cad,
-                                 this.nome,
-                                 this.ramal,
-                                 this.pausa,
-                                 this.celular,
-                                 this.monitoria,
-                                 this.cc,
-                                 this.setor,
-                                 this.cargo,
-                                 this.funcao,
-                                 this.nvl,
-                                 this.gestor,
-                                 this.jornada,
-                                 this.sab,
-                                 this.mes_ano
+                                 self.cad,
+                                 self.nome,
+                                 self.ramal,
+                                 self.pausa,
+                                 self.celular,
+                                 self.monitoria,
+                                 self.cc,
+                                 self.setor,
+                                 self.cargo,
+                                 self.funcao,
+                                 self.nvl,
+                                 self.gestor,
+                                 self.jornada,
+                                 self.sab,
+                                 self.mes_ano
                              )
         return ado.executar(SQL)
 

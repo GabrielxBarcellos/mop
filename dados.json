@@ -1,5 +1,5 @@
 {
-    "coon":{
+    "conn":{
         "server":"gbarcellossilva.database.windows.net",
         "database" : "SANDBOX",
         "username" : "gbarcellossilva",
