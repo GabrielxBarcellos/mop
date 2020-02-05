@@ -25,9 +25,7 @@ def cargos():
 def home():
     return render_template('home.html')
 
-@app.route('/agentes')
-
-@app.route('/cargos', methods=['POST','GET'])
+@app.route('/agentes', methods=['POST','GET'])
 def agentes():
 
     setores = controle.setor()
@@ -41,7 +39,7 @@ def agentes():
         return render_template('agentes.html',mop = mop , keys = mop[0].keys(), setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
     
 
-    filtrado = controle.agente(
+    mop = controle.agente(
         request.form['cadastro'],
         request.form['nome'],
         request.form['ramal'],
@@ -59,9 +57,12 @@ def agentes():
         request.form['mes']
     ).filtrar()
 
-    print(filtrado)
-    mop = controle.mop()
-    return render_template('agentes.html',mop = mop , keys = mop[0].keys(), setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
+    headers = {'':''}
+
+    if len(mop):
+       headers  = mop[0].keys()
+
+    return render_template('agentes.html',mop = mop , keys = headers, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
 
 
 @app.route('/cadastrar_operador')

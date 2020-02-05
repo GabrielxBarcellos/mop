@@ -52,27 +52,36 @@ class agente():
             ('FUNCAO',self.funcao),
             ('NVL',self.nvl),
             ('GESTOR',self.gestor),
-            ('JORNADA',self.jornada)]
+            ('JORNADA',self.jornada),
+            ('SAB',self.sab),
+            ('MES_ANO',self.mes_ano)
+            ]
 
         lista_somente_elemento_preenchido = []
         
         for e  in elementos:
-            if e[1] != None:
+            if e[1] != '':
                 lista_somente_elemento_preenchido.append(e)
         
         filtro = ""
 
         for campo in lista_somente_elemento_preenchido:
-            filtro = campo[0] + " = '" + campo[1] + "'," 
+            filtro = filtro  + campo[0] + " = '" + campo[1] + "' and " 
         
-        filtro = filtro.sus[ :len(filtro) -1] 
+        filtro = filtro[ :len(filtro) -4] 
 
-        return filtro
-        
-
+        SQL = 'SELECT * FROM NC_MOP WHERE ' + filtro
+        print(SQL)
+        if (len(lista_somente_elemento_preenchido)>0) :
+            return ado.buscar(cmd_sql= SQL)
+        else:
+            return mop()
 
 def mop():
-    return ado.buscar( table="NC_MOP")
+
+    retorno  = ado.buscar( table="NC_MOP")
+    print(retorno)
+    return retorno
 
 def jornada():
     return ado.buscar( cmd_sql="SELECT DISTINCT JORNADA FROM NC_JORNADA")

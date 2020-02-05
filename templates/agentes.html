@@ -1,184 +1,187 @@
-
 {% extends 'layout.html' %}
 
 
 {% block style %}
-    table{
-        max-width: 100%;
-        overflow: auto;
-    }
+table{
+
+display: block;
+max-width: 100%;
+overflow: auto;
+font-size: .9em;
+}
 {% endblock %}
 
 {%block conteudo%}
 
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4 class="red-text">Localizar</h4>
-      <form class="row" method="POST" action="{{url_for('agentes')}}">
-        <div class="input-field col s2">
-            <input type="number" id="cadastro" name="cadastro" class="validate">
-            <label for="cadastro">CAD</label>
-          </div>
-          <div class="input-field col s10">
-            <input type="text" id="nome" name="nome" class="validate">
-            <label for="nome">Nome</label>
-          </div>
-          <div class="input-field col s4">
-            <input type="text" id="ramal" name="ramal" class="validate">
-            <label for="ramal">Ramal</label>
-          </div>
-          <div class="input-field col s2">
-            <select id='pausa' name="pausa">
-              <label>PAUSA</label>
-              <option value="" selected disabled>PAUSA</option>
-              <option value="SIM">SIM</option>
-              <option value="NAO">NAO</option>
-            </select>
-          </div>
-          <div class="input-field col s2">
-            <select id='celular' name="celular">
-              <label>CELULAR</label>
-              <option value="" selected disabled>CELULAR</option>
-              <option value="SIM">SIM</option>
-              <option value="NAO">NAO</option>
-            </select>
-          </div>
-          <div class="input-field col s2">
-            <select id='monitoria' name="monitoria">
-              <label>MONITORIA</label>
-              <option value="" selected disabled>MONITORIA</option>
-              <option value="SIM">SIM</option>
-              <option value="NAO">NAO</option>
-            </select>
-          </div>
-          <div class="input-field col s2">
-            <select id='sabado' name="sabado">
-              <label>TRABALHA SABADO</label>
-              <option value="" selected disabled>T. SABADO</option>
-              <option value="SIM">SIM</option>
-              <option value="NAO">NAO</option>
-            </select>
-          </div>
-          <div class="input-field col s2">
-            <select id='cc' name="cc">
-              <label>CC</label>
-              <option value="" selected>CC</option>
-              {% for item in ccs %}
-                <option value="{{item["CC"]}}">{{item["CC"]}}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-field col s2">
-            <select id='nvl' name="nvl">
-              <label>NVL</label>
-              <option value="" selected disabled>NVL</option>
-              <option value="ADM">ADM</option>
-              <option value="AUX">AUX</option>
-              <option value="OPE">OPE</option>
-            </select>
-          </div>
-        <div class="input-field col s4">
-          <select id='setor' name="setor">
-            <label>Setor</label>
-            <option value="" selected>SETOR</option>
-            {% for item in setores %}
-              <option value="{{item["SETOR"]}}">{{item["SETOR"]}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="input-field col s4">
-          <select id='funcao' name="funcao">
-            <option value="" selected>FUNCAO</option>
-          </select>
-        </div>
-        <div class="input-field col s3">
-          <select id='cargo' name="cargo">
-            <option value="" selected>CARGO</option>
-          </select>
-        </div>
-        <div class="input-field col s4">
-          <select id='gestor' name="gestor">
-            <label>Gestor</label>
-            <option value="" selected>GESTOR</option>
-            {% for item in gestores %}
-              <option value="{{item["NOME"]}}">{{item["NOME"]}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="input-field col s3">
-          <select id='jornada' name="jornada">
-            <label>Jornada</label>
-            <option value="" selected>JORNADA</option>
-            {% for item in jornadas %}
-              <option value="{{item["JORNADA"]}}">{{item["JORNADA"]}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="input-field col s2">
-          <select id='mes' name="mes">
-            <label>Meses</label>
-            <option value="" selected>MESES</option>
-            {% for item in meses %}
-              <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <button href="#!" class="modal-close waves-effect waves-green btn">Filtrar</button>
-      </form>
-    </div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4 class="red-text">Localizar</h4>
+    <form class="row" method="POST" action="{{url_for('agentes')}}">
+      <div class="input-field col s2">
+        <input type="number" id="cadastro" name="cadastro" class="validate">
+        <label for="cadastro">CAD</label>
+      </div>
+      <div class="input-field col s10">
+        <input type="text" id="nome" name="nome" class="validate">
+        <label for="nome">Nome</label>
+      </div>
+      <div class="input-field col s4">
+        <input type="text" id="ramal" name="ramal" class="validate">
+        <label for="ramal">Ramal</label>
+      </div>
+      <div class="input-field col s2">
+        <select id='pausa' name="pausa">
+          <label>PAUSA</label>
+          <option value="" selected>PAUSA</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='celular' name="celular">
+          <label>CELULAR</label>
+          <option value="" selected>CELULAR</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='monitoria' name="monitoria">
+          <label>MONITORIA</label>
+          <option value="" selected>MONITORIA</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='sabado' name="sabado">
+          <label>TRABALHA SABADO</label>
+          <option value="" selected>T. SABADO</option>
+          <option value="SIM">SIM</option>
+          <option value="NAO">NAO</option>
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='cc' name="cc">
+          <label>CC</label>
+          <option value="" selected>CC</option>
+          {% for item in ccs %}
+          <option value="{{item["CC"]}}">{{item["CC"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='nvl' name="nvl">
+          <label>NVL</label>
+          <option value="" selected>NVL</option>
+          <option value="ADM">ADM</option>
+          <option value="AUX">AUX</option>
+          <option value="OPE">OPE</option>
+        </select>
+      </div>
+      <div class="input-field col s4">
+        <select id='setor' name="setor">
+          <label>Setor</label>
+          <option value="">SETOR</option>
+          {% for item in setores %}
+          <option value="{{item["SETOR"]}}">{{item["SETOR"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s4">
+        <select id='funcao' name="funcao">
+          <option value="" selected>FUNCAO</option>
+        </select>
+      </div>
+      <div class="input-field col s3">
+        <select id='cargo' name="cargo">
+          <option value="" selected>CARGO</option>
+        </select>
+      </div>
+      <div class="input-field col s4">
+        <select id='gestor' name="gestor">
+          <label>Gestor</label>
+          <option value="" selected>GESTOR</option>
+          {% for item in gestores %}
+          <option value="{{item["NOME"]}}">{{item["NOME"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s3">
+        <select id='jornada' name="jornada">
+          <label>Jornada</label>
+          <option value="" selected>JORNADA</option>
+          {% for item in jornadas %}
+          <option value="{{item["JORNADA"]}}">{{item["JORNADA"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='mes' name="mes">
+          <label>Meses</label>
+          <option value="" selected>MESES</option>
+          {% for item in meses %}
+          <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button href="#!" class="modal-close waves-effect waves-green btn">Filtrar</button>
+    </form>
   </div>
+</div>
 
 <table class="responsive-table striped">
-    <thead>
+  <thead>
 
-        <tr>
-            <th class="ignora">
-                AÇÕES
-            </th>
-                {% for item in keys %}
-                    <th>
-                        {{ item }}
-                    </th>
-                {% endfor %}
+    <tr>
+      <th class="ignora">
+      </th>
+      {% for item in keys %}
+      <th>
+        {{ item }}
+      </th>
+      {% endfor %}
 
-        </tr>
-    </thead>
-    <tbody>
+    </tr>
+  </thead>
+  <tbody>
 
-        {% for item in mop %}
-        <tr> 
-            <td> 
-                <a class='dropdown-trigger btn-flat' href='#' data-target='dropdown1'><i class="material-icons black-text">dehaze</i></a>
-                <!-- Dropdown Structure -->
-                <ul id='dropdown1' class='dropdown-content'>
-                    <form>
-                    <li><a href="#!"><i class="material-icons">update</i>Atualizar</a></li>
-                    <li><a href="#!"><i class="material-icons">delete</i>Deletar</a></li>
-                    </form>
-                </ul>
-            </td>
-            {% for subitem in item.values() %}
-            <td>{{subitem}}</td>
-            {% endfor %}
+    {% for item in mop %}
+    <tr>
+      <td>
+        <a class='dropdown-trigger btn-flat' href='#' data-target='dropdown1'><i
+            class="material-icons black-text">dehaze</i></a>
+        <!-- Dropdown Structure -->
+        <ul id='dropdown1' class='dropdown-content'>
+          <form>
+            <li><a href="#!"><i class="material-icons">update</i>Atualizar</a></li>
+            <li><a href="#!"><i class="material-icons">delete</i>Deletar</a></li>
+          </form>
+        </ul>
+      </td>
+      {% for subitem in item.values() %}
+      <td>{{subitem}}</td>
+      {% endfor %}
 
-        </tr>
-        {% endfor %}
+    </tr>
+    {% endfor %}
 
-    </tbody>
+  </tbody>
 </table>
 
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">add</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating blue modal-trigger" href="#modal1"><i class="material-icons orange">search</i></a></li>
-      <li><a class="btn-floating blue" href="{{url_for('cadastrar_operador')}}"><i class="material-icons">person_add</i></a></li>
-      <li><a class="btn-floating green darken-1" id='download'><i class="material-icons">file_download</i></a></li>
-    </ul>
-  </div>
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">add</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating blue modal-trigger" href="#modal1"><i class="material-icons orange">search</i></a></li>
+    <li><a class="btn-floating blue" href="{{url_for('cadastrar_operador')}}"><i
+          class="material-icons">person_add</i></a></li>
+    <li><a class="btn-floating green darken-1" id='download'><i class="material-icons">file_download</i></a></li>
+  </ul>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -190,18 +193,18 @@ trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
 
 
 $('#download').click(function(){
-    var texto = ""
-    $.each($('tr'), function (indexInArray, valueOfElement) { 
-    $.each($(valueOfElement).children(), function (indexInArray, valueOfElement) { 
-            
-            texto =  texto + ($(valueOfElement).text().trim()) +";"
-        });  
-    console.log('pula linha')
-    texto = texto + "\n"
-    });
-    console.log(texto)
+var texto = ""
+$.each($('tr'), function (indexInArray, valueOfElement) {
+$.each($(valueOfElement).children(), function (indexInArray, valueOfElement) {
 
-    download_csv(texto)
+texto = texto + ($(valueOfElement).text().trim()) +";"
+});
+console.log('pula linha')
+texto = texto + "\n"
+});
+console.log(texto)
+
+download_csv(texto)
 })
 
 {% endblock %}
