@@ -13,7 +13,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/funcoes', methods=['POST'])
 def funcoes():
     setor = request.form['dado']
-    return jsonify(controle.funcao(setor))
+    func_ = controle.funcao(setor)
+    return jsonify(func_)
 
 @app.route('/cargos', methods=['POST'])
 def cargos():
@@ -24,6 +25,7 @@ def cargos():
 @app.route('/')
 def home():
     return render_template('home.html')
+
 
 @app.route('/agentes', methods=['POST','GET'])
 def agentes():
@@ -64,6 +66,34 @@ def agentes():
 
     return render_template('agentes.html',mop = mop , keys = headers, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
 
+
+@app.route('/deletar_agente', methods=['POST'])
+def deletar_agente():
+        id = request.form['id']
+        controle.agente.deletar(id)
+        return redirect(url_for("agentes"))
+
+@app.route('/atualizar_agente', methods=['POST'])
+def atualizar_agente():
+        id = request.form['id']
+        controle.agente(
+        request.form['cadastro'],
+        request.form['nome'],
+        request.form['ramal'],
+        request.form['pausa'],
+        request.form['celular'],
+        request.form['monitoria'],
+        request.form['cc'],
+        request.form['setor'],
+        request.form['cargo'],
+        request.form['funcao'],
+        request.form['nvl'],
+        request.form['gestor'],
+        request.form['jornada'],
+        request.form['sabado'],
+        request.form['mes']
+    ).atualizar(id)
+        return redirect(url_for("agentes"))
 
 @app.route('/cadastrar_operador')
 def cadastrar_operador():

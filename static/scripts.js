@@ -1,4 +1,4 @@
-$('btn')
+
 
 function valida_form(classe_ignora){
 
@@ -49,6 +49,8 @@ function trazer_option(select ,item_banco ,url_back, pai, pai2){
       }else{
         var json = {dado:$(pai).val(), dado2:$(pai2).val()}
       }
+
+
       $.ajax({
         url: url_back,
         data: json,

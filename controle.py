@@ -38,6 +38,55 @@ class agente():
                              )
         return ado.executar(SQL)
 
+
+    @staticmethod
+    def deletar(id):
+        SQL = "DELETE FROM NC_MOP WHERE ID = {}".format(id)
+        
+        try:
+            ado.executar(SQL)
+        except:
+            return False
+        return True
+    def atualizar(self,id):
+        SQL = """UPDATE NC_MOP
+                SET
+                    CAD = '{}',
+                    NOME = '{}',
+                    RAMAL = '{}',
+                    PAUSAS = '{}',
+                    CELULAR = '{}',
+                    MONITORIA = '{}',
+                    SETOR = '{}',
+                    CARGO = '{}',
+                    FUNCAO = '{}',
+                    NVL = '{}',
+                    GESTOR = '{}',
+                    JORNADA = '{}',
+                    SAB = '{}',
+                    MES_ANO = '{}'
+                WHERE
+                    ID = {}""".format(
+                        self.cad,
+                        self.nome,
+                        self.ramal,
+                        self.pausa,
+                        self.celular,
+                        self.monitoria,
+                        self.setor,
+                        self.cargo,
+                        self.funcao,
+                        self.nvl,
+                        self.gestor,
+                        self.jornada,
+                        self.sab,
+                        self.mes_ano,
+                        id
+                    )
+
+        ado.executar(SQL)
+
+
     def filtrar(self):
         elementos = [
             ('CAD',self.cad), 
@@ -71,7 +120,6 @@ class agente():
         filtro = filtro[ :len(filtro) -4] 
 
         SQL = 'SELECT * FROM NC_MOP WHERE ' + filtro
-        print(SQL)
         if (len(lista_somente_elemento_preenchido)>0) :
             return ado.buscar(cmd_sql= SQL)
         else:
@@ -80,7 +128,6 @@ class agente():
 def mop():
 
     retorno  = ado.buscar( table="NC_MOP")
-    print(retorno)
     return retorno
 
 def jornada():

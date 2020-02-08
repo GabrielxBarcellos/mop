@@ -156,8 +156,8 @@ font-size: .9em;
         <!-- Dropdown Structure -->
         <ul id='dropdown1' class='dropdown-content'>
           <form>
-            <li><a href="#!"><i class="material-icons">update</i>Atualizar</a></li>
-            <li><a href="#!"><i class="material-icons">delete</i>Deletar</a></li>
+            <li class=""><form method="POST" action="{{url_for('atualizar_agente')}}" ><input   type="hidden" value="{{item["ID"]}}" name="id"><button href="#!"  style="padding: 0px; "class="update-btn orange-text btn-flat"><i class="material-icons">update</i>Atualizar</button></form></li>
+            <li class=""><form method="POST" action="{{url_for('deletar_agente')}}" ><input  type="hidden" value="{{item["ID"]}}" name="id"><button href="#!" style="padding: 0px;" class="update-btn red-text btn-flat"><i class="material-icons">delete</i>Deletar</button></form></li>
           </form>
         </ul>
       </td>
@@ -187,9 +187,9 @@ font-size: .9em;
 {% block script %}
 
 
+trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
 trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
 
-trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
 
 
 $('#download').click(function(){
@@ -207,5 +207,6 @@ texto = texto + "\n"
 });
 download_csv(texto)
 })
+
 
 {% endblock %}
