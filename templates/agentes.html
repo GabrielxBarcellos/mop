@@ -150,7 +150,7 @@ font-size: .9em;
 
     {% for item in mop %}
     <tr>
-      <td>
+      <td class="ignora">
         <a class='dropdown-trigger btn-flat' href='#' data-target='dropdown1'><i
             class="material-icons black-text">dehaze</i></a>
         <!-- Dropdown Structure -->
@@ -197,13 +197,14 @@ var texto = ""
 $.each($('tr'), function (indexInArray, valueOfElement) {
 $.each($(valueOfElement).children(), function (indexInArray, valueOfElement) {
 
-texto = texto + ($(valueOfElement).text().trim()) +";"
+  console.log($(valueOfElement).hasClass('ignora'))
+  if (!($(valueOfElement).hasClass('ignora'))){
+    texto = texto + ($(valueOfElement).text().trim()) +";"
+  }
 });
 console.log('pula linha')
 texto = texto + "\n"
 });
-console.log(texto)
-
 download_csv(texto)
 })
 
