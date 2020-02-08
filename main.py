@@ -73,27 +73,49 @@ def deletar_agente():
         controle.agente.deletar(id)
         return redirect(url_for("agentes"))
 
-@app.route('/atualizar_agente', methods=['POST'])
+@app.route('/atualizar_agente', methods=['POST','GET'])
 def atualizar_agente():
-        id = request.form['id']
-        controle.agente(
-        request.form['cadastro'],
-        request.form['nome'],
-        request.form['ramal'],
-        request.form['pausa'],
-        request.form['celular'],
-        request.form['monitoria'],
-        request.form['cc'],
-        request.form['setor'],
-        request.form['cargo'],
-        request.form['funcao'],
-        request.form['nvl'],
-        request.form['gestor'],
-        request.form['jornada'],
-        request.form['sabado'],
-        request.form['mes']
-    ).atualizar(id)
-        return redirect(url_for("agentes"))
+        if request.method == "GET":
+            id = request.form['id']
+            controle.agente(
+            request.form['cadastro'],
+            request.form['nome'],
+            request.form['ramal'],
+            request.form['pausa'],
+            request.form['celular'],
+            request.form['monitoria'],
+            request.form['cc'],
+            request.form['setor'],
+            request.form['cargo'],
+            request.form['funcao'],
+            request.form['nvl'],
+            request.form['gestor'],
+            request.form['jornada'],
+            request.form['sabado'],
+            request.form['mes']
+        ).atualizar(id)
+            return redirect(url_for("agentes"))
+
+        if request.method == "POST":
+            id = request.form['id']
+            controle.agente(
+            request.form['cadastro'],
+            request.form['nome'],
+            request.form['ramal'],
+            request.form['pausa'],
+            request.form['celular'],
+            request.form['monitoria'],
+            request.form['cc'],
+            request.form['setor'],
+            request.form['cargo'],
+            request.form['funcao'],
+            request.form['nvl'],
+            request.form['gestor'],
+            request.form['jornada'],
+            request.form['sabado'],
+            request.form['mes']
+        ).atualizar(id)
+            return redirect(url_for("agentes"))
 
 @app.route('/cadastrar_operador')
 def cadastrar_operador():
