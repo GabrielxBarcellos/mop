@@ -2,57 +2,58 @@
 
 {%block conteudo%}
 
-<h1 class="red-text">Cadastro de operador</h1>
+<h1 class="red-text">Atualiar operador</h1>
 <div class="section">
-  <form action="{{url_for('cadastrar_operador_post')}}" method="POST" class="row formulario">
+  <form action="{{url_for('atualizar_agente')}}" method="POST" class="row formulario">
+    <input type="hidden" value="{{id}}" name="id">
     <div class="input-field col s2">
-      <input type="number" id="cadastro" name="cadastro" class="validate">
+      <input type="number" id="cadastro" name="cadastro" class="validate" value="{{agente["CAD"]}}">
       <label for="cadastro">CAD</label>
     </div>
     <div class="input-field col s10">
-      <input type="text" id="nome" name="nome" class="validate">
+      <input type="text" id="nome" name="nome" class="validate" value="{{agente["NOME"]}}">
       <label for="nome">Nome</label>
     </div>
     <div class="input-field col s4">
-      <input type="text" id="ramal" name="ramal" class="validate">
+      <input type="text" id="ramal" name="ramal" class="validate" value="{{agente["RAMAL"]}}">
       <label for="ramal">Ramal</label>
     </div>
     <div class="input-field col s2">
       <select id='pausa' name="pausa">
         <label>PAUSA</label>
         <option value="" selected disabled>PAUSA</option>
-        <option value="SIM">SIM</option>
-        <option value="NAO">NAO</option>
+        <option value="SIM" {{'selected' if agente["PAUSAS"]=="SIM"}}>SIM</option>
+        <option value="NAO" {{'selected' if agente["PAUSAS"]=="NAO"}}>NAO</option>
       </select>
     </div>
     <div class="input-field col s2">
       <select id='monitoria' name="monitoria">
         <label>MONITORIA</label>
         <option value="" selected disabled>MONITORIA</option>
-        <option value="SIM">SIM</option>
-        <option value="NAO">NAO</option>
+        <option value="SIM" {{'selected' if agente["MONITORIA"]=="SIM"}}>SIM</option>
+        <option value="NAO" {{'selected' if agente["MONITORIA"]=="NAO"}}>NAO</option>
       </select>
     </div>
     <div class="input-field col s2">
       <select name="celular">
         <label>CELULAR</label>
         <option value="" selected disabled>CELULAR</option>
-        <option value="SIM">SIM</option>
-        <option value="NAO">NAO</option>
+        <option value="SIM" {{'selected' if agente["CELULAR"]=="SIM"}}>SIM</option>
+        <option value="NAO" {{'selected' if agente["CELULAR"]=="NAO"}}>NAO</option>
       </select>
     </div>
     <div class="input-field col s2">
       <select id='sabado' name="sabado">
         <label>TRABALHA SABADO</label>
         <option value="" selected disabled>TRABALHA SABADO</option>
-        <option value="SIM">SIM</option>
-        <option value="NAO">NAO</option>
+        <option value="SIM" {{'selected' if agente["SAB"]=="SIM"}}>SIM</option>
+        <option value="NAO" {{'selected' if agente["SAB"]=="NAO"}}>NAO</option>
       </select>
     </div>
     <div class="input-field col s2">
       <select id='cc' name="cc">
         <label>CC</label>
-        <option value="" selected>CC</option>
+        <option value="{{agente["CC"]}}" selected>{{agente["CC"]}}</option>
         {% for item in ccs %}
         <option value="{{item["CC"]}}">{{item["CC"]}}</option>
         {% endfor %}
@@ -62,15 +63,15 @@
       <select id='nvl' name="nvl">
         <label>NVL</label>
         <option value="" selected disabled>NVL</option>
-        <option value="ADM">ADM</option>
-        <option value="AUX">AUX</option>
-        <option value="OPE">OPE</option>
+        <option value="ADM" {{'selected' if agente["NVL"]=="ADM"}} >ADM</option>
+        <option value="AUX" {{'selected' if agente["NVL"]=="AUX"}} >AUX</option>
+        <option value="OPE" {{'selected' if agente["NVL"]=="OPE"}} >OPE</option>
       </select>
     </div>
     <div class="input-field col s4">
       <select id='setor' name="setor">
         <label>Setor</label>
-        <option value="" selected>SETOR</option>
+        <option value="{{agente["SETOR"]}}" selected>{{agente["SETOR"]}}</option>
         {% for item in setores %}
         <option value="{{item["SETOR"]}}">{{item["SETOR"]}}</option>
         {% endfor %}
@@ -79,17 +80,18 @@
     <div class="input-field col s4">
       <select id='funcao' name="funcao">
         <option value="" selected>FUNCAO</option>
+        <option value="{{agente["FUNCAO"]}}" selected>{{agente["FUNCAO"]}}</option>
       </select>
     </div>
     <div class="input-field col s3">
       <select id='cargo' name="cargo">
-        <option value="" selected>CARGO</option>
+        <option value="{{agente["CARGO"]}}" selected>{{agente["CARGO"]}}</option>
       </select>
     </div>
     <div class="input-field col s4">
       <select id='gestor' name="gestor">
         <label>Gestor</label>
-        <option value="" selected>GESTOR</option>
+        <option value="{{agente["GESTOR"]}}" selected>{{agente["GESTOR"]}}</option>
         {% for item in gestores %}
         <option value="{{item["NOME"]}}">{{item["NOME"]}}</option>
         {% endfor %}
@@ -98,7 +100,7 @@
     <div class="input-field col s3">
       <select id='jornada' name="jornada">
         <label>Jornada</label>
-        <option value="" selected>JORNADA</option>
+        <option value="{{agente["JORNADA"]}}" selected>{{agente["JORNADA"]}}</option>
         {% for item in jornadas %}
         <option value="{{item["JORNADA"]}}">{{item["JORNADA"]}}</option>
         {% endfor %}
@@ -107,7 +109,7 @@
     <div class="input-field col s2">
       <select id='mes' name="mes">
         <label>Meses</label>
-        <option value="" selected>MESES</option>
+        <option value="{{agente["MES_ANO"]}}" selected>{{agente["MES_ANO"]}}</option>
         {% for item in meses %}
         <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
         {% endfor %}

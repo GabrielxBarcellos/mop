@@ -40,7 +40,6 @@ def agentes():
         mop = controle.mop()
         return render_template('agentes.html',mop = mop , keys = mop[0].keys(), setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
     
-
     mop = controle.agente(
         request.form['cadastro'],
         request.form['nome'],
@@ -76,25 +75,14 @@ def deletar_agente():
 @app.route('/atualizar_agente', methods=['POST','GET'])
 def atualizar_agente():
         if request.method == "GET":
-            id = request.form['id']
-            controle.agente(
-            request.form['cadastro'],
-            request.form['nome'],
-            request.form['ramal'],
-            request.form['pausa'],
-            request.form['celular'],
-            request.form['monitoria'],
-            request.form['cc'],
-            request.form['setor'],
-            request.form['cargo'],
-            request.form['funcao'],
-            request.form['nvl'],
-            request.form['gestor'],
-            request.form['jornada'],
-            request.form['sabado'],
-            request.form['mes']
-        ).atualizar(id)
-            return redirect(url_for("agentes"))
+            agente = controle.agente.buscar_por_id(request.args.get('id'))
+            setores = controle.setor()
+            ccs = controle.cc()
+            gestores = controle.gestor()
+            jornadas = controle.jornada()
+            meses = controle.mes()
+            print(agente)
+            return render_template('agente_atualizar.html',id = request.args.get('id'),agente = agente, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
 
         if request.method == "POST":
             id = request.form['id']

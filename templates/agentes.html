@@ -151,14 +151,12 @@ font-size: .9em;
     {% for item in mop %}
     <tr>
       <td class="ignora">
-        <a class='dropdown-trigger btn-flat' href='#' data-target='dropdown1'><i
+        <a class='dropdown-trigger btn-flat' href='#' data-target='drop{{item["ID"]}}'><i
             class="material-icons black-text">dehaze</i></a>
         <!-- Dropdown Structure -->
-        <ul id='dropdown1' class='dropdown-content'>
-          <form>
-            <li class=""><form method="POST" action="{{url_for('atualizar_agente')}}" ><input   type="hidden" value="{{item["ID"]}}" name="id"><button href="#!"  style="padding: 0px; "class="update-btn orange-text btn-flat"><i class="material-icons">update</i>Atualizar</button></form></li>
-            <li class=""><form method="POST" action="{{url_for('deletar_agente')}}" ><input  type="hidden" value="{{item["ID"]}}" name="id"><button href="#!" style="padding: 0px;" class="update-btn red-text btn-flat"><i class="material-icons">delete</i>Deletar</button></form></li>
-          </form>
+        <ul id='drop{{item["ID"]}}' class='dropdown-content'>
+            <li class=""><form class="atualizar" method="GET" action="{{url_for('atualizar_agente')}}"><input   type="hidden" value="{{item["ID"]}}" name="id"><button style="padding: 0px; "class="update-btn orange-text btn-flat"><i class="material-icons">update</i>Atualizar</button></form></li>
+            <li class=""><form method="POST" action="{{url_for('deletar_agente')}}" ><input  type="hidden" value="{{item["ID"]}}" name="id"><button style="padding: 0px;" class="update-btn red-text btn-flat"><i class="material-icons">delete</i>Deletar</button></form></li>
         </ul>
       </td>
       {% for subitem in item.values() %}

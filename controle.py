@@ -17,6 +17,14 @@ class agente():
         self.sab = sab
         self.mes_ano = mes_ano
 
+    @staticmethod
+    def buscar_por_id(ID):
+
+        SQL = "SELECT * FROM NC_MOP WHERE ID = " + ID 
+        print(SQL)
+        return ado.buscar(cmd_sql= SQL)[0]
+
+
     def cadastrar(self):
         SQL = """INSERT INTO NC_MOP(CAD,NOME,RAMAL,PAUSAS,CELULAR,MONITORIA,CC,SETOR,CARGO,FUNCAO,NVL,GESTOR,JORNADA,SAB,MES_ANO) 
                              VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
@@ -83,6 +91,7 @@ class agente():
                         self.mes_ano,
                         id
                     )
+        print(SQL)
 
         ado.executar(SQL)
 
