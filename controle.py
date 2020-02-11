@@ -163,3 +163,10 @@ def cargo(setor,funcao):
 def mes():
     SQL = "SELECT * FROM NC_MES ORDER BY ORDEM DESC"
     return ado.buscar( cmd_sql= SQL)
+
+
+def logar(usuario,senha):
+
+    SQL = "SELECT * FROM NC_USER WHERE MATRICULA = {} AND SENHA = '{}'".format(usuario,senha)
+    print(SQL)
+    return ado.buscar(cmd_sql=SQL)[0]

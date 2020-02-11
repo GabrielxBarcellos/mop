@@ -22,7 +22,7 @@
         <ul id="slide-out" class="sidenav">
           <li><div class="brand-logo" style="padding: 0 32px;"><a href="{{url_for('home')}}"><h2 class="red-text">MOP</h2></a> </div></div></li>
           <li><div class="divider"></div></li>
-          <li><a class="waves-effect waves-light"><i class="material-icons left">person</i>Usuário: </a></li>
+          <li><a class="waves-effect waves-light"><i class="material-icons left">person</i>Usuário: {{session['MATRICULA']}}</a></li>
           <li><a class="waves-effect waves-light"><i class="material-icons left">power_settings_new</i>Deslogar</a></li>
           <li><div class="divider"></div></li>
           <li><a href="{{url_for('agentes')}}"><i class="material-icons left">people</i>Agentes</a></li>

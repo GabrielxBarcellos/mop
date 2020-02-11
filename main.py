@@ -10,11 +10,29 @@ app = Flask(__name__)
 app.secret_key = 'lady'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
+
+@app.route('/', methods=['GET','POST'])
+def login():
+
+    if request.method == 'GET':
+        return render_template('login.html')
+    if request.method == 'POST':
+        try:
+            usuario = controle.logar(request.form['user'],request.form['password'])
+            print(usuario)
+            session['MATRICULA'] = usuario['MATRICULA']
+            session['NV'] = usuario['NV']
+            return render_template('home.html')
+        except:
+            flash('problema ao logar')
+            return render_template('login.html')
+
+
 @app.route('/funcoes', methods=['POST'])
 def funcoes():
     setor = request.form['dado']
-    func_ = controle.funcao(setor)
-    return jsonify(func_)
+    return  jsonify( controle.funcao(setor))
 
 @app.route('/cargos', methods=['POST'])
 def cargos():
@@ -22,7 +40,7 @@ def cargos():
     funcao = request.form['dado2']
     return jsonify(controle.cargo(setor,funcao))
 
-@app.route('/')
+@app.route('/home')
 def home():
     return render_template('home.html')
 

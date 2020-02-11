@@ -129,8 +129,11 @@ $('.formulario').submit()
 }
 })
 
-trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
 
 trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
+
+trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
+
+
 
 {% endblock %}

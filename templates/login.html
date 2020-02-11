@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOP</title>
+    <link href="static\materialize-v1.0.0\materialize\css\materialize.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" type="imagem/png" href="static\icon.png" />
+    <style>
+    .center-align {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    </style>
+</head>
+<body class="orange">
+    <form class="center-align white" style="padding: 2em;padding-top: 0px; width: 20%;" method="POST" action="{{url_for('login')}}">
+        <h1 class="orange-text">Logar</h1>
+        {% for message in get_flashed_messages() %}
+            <div class="alert-error">Error: {{ message }}</div>
+        {% endfor %}
+        <div class="input-field">
+            <input placeholder="Matricula" id="user" type="number" class="validate" name="user">
+            <label for="user">Login</label>
+          </div>
+          <div class="input-field">
+            <input placeholder="Matricula" id="user" type="password" class="validate" name="password">
+            <label for="user">Senha</label>
+          </div>
+        <button class="btn right orange">Logar</button>
+    </form>
+    <script src="static\jquery-3.4.1.min.js"></script>
+    <script src="static\materialize-v1.0.0\materialize\js\materialize.min.js"></script>
+</body>
+</html>
