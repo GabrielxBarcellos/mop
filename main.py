@@ -90,6 +90,8 @@ def agentes():
 def deletar_agente():
         id = request.form['id']
         controle.agente.deletar(id)
+        flash('Operador deletado')
+
         return redirect(url_for("agentes"))
 
 @app.route('/atualizar_agente', methods=['POST','GET'])
