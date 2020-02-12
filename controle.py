@@ -1,4 +1,7 @@
 import ado
+import csv
+import os
+
 class agente():
     def __init__(self, cad, nome, ramal ,pausa ,celular, monitoria, cc, setor, cargo, funcao, nvl, gestor, jornada, sab, mes_ano ):
         self.cad = cad
@@ -21,7 +24,6 @@ class agente():
     def buscar_por_id(ID):
 
         SQL = "SELECT * FROM NC_MOP WHERE ID = " + ID 
-        print(SQL)
         return ado.buscar(cmd_sql= SQL)[0]
 
 
@@ -91,7 +93,6 @@ class agente():
                         self.mes_ano,
                         id
                     )
-        print(SQL)
 
         ado.executar(SQL)
 
@@ -135,7 +136,6 @@ class agente():
             return mop()
 
 def mop():
-
     retorno  = ado.buscar( table="NC_MOP")
     return retorno
 
@@ -164,9 +164,56 @@ def mes():
     SQL = "SELECT * FROM NC_MES ORDER BY ORDEM DESC"
     return ado.buscar( cmd_sql= SQL)
 
+def status():
+    SQL = "SELECT * FROM NC_STATUS"
+    return ado.buscar(cmd_sql=SQL)
 
 def logar(usuario,senha):
 
     SQL = "SELECT * FROM NC_USER WHERE MATRICULA = {} AND SENHA = '{}'".format(usuario,senha)
-    print(SQL)
     return ado.buscar(cmd_sql=SQL)[0]
+
+def csv_to_sql(arquivo_csv):
+
+    with open(arquivo_csv,encoding='utf-8') as arquivo:
+
+        linhas = csv.reader(arquivo, delimiter=";")
+
+        contagem = 0
+        SQL = 'INSERT INTO NC_MOP('
+        for linha in linhas:            
+            #CABEÇALHO
+
+            if (contagem == 0) :
+                
+                ignora = 0 #ignora o id
+                for item in linha:
+                    if ignora != 0:
+                        SQL += str(item).strip() + ","
+                    ignora += 1
+
+
+
+                SQL = SQL.strip()
+                SQL = SQL[:-2] +') VALUES '
+                contagem += 1
+
+                continue
+
+            #corpo
+            SQL+="("
+            ignora = 0 #ignora o id
+            for item in linha:
+                if ignora != 0 :
+                    SQL += "'" +item + "',"
+                ignora += 1
+            SQL = SQL[:-4] + "),"
+            contagem +=1
+        SQL = SQL[:-1]
+        print(SQL)
+        return SQL
+
+def importar(arquivo):
+
+    ado.executar(csv_to_sql(arquivo))
+    os.remove(arquivo)

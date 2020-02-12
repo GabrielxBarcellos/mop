@@ -168,12 +168,32 @@ font-size: .9em;
 
   </tbody>
 </table>
-
+  <!-- Modal Structure -->
+  <div id="importa" class="modal">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" class="row" action="{{url_for('upload_file')}}">
+          <div class="file-field input-field ">
+            <div class="btn blue darken-4">
+              <span class="">ARQUIVO</span>
+              <input type="file" class="" name="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light right orange" type="submit" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </button>
+      </form>
+    </div>
+  </div>
+ 
 <div class="fixed-action-btn">
   <a class="btn-floating btn-large red">
     <i class="large material-icons">add</i>
   </a>
   <ul>
+    <li><a class="btn-floating red darken-1 modal-trigger" href="#importa" id='bt_importa'><i class="material-icons">attach_file</i></a></li>
     <li><a class="btn-floating blue modal-trigger" href="#modal1"><i class="material-icons orange">search</i></a></li>
     <li><a class="btn-floating blue" href="{{url_for('cadastrar_operador')}}"><i
           class="material-icons">person_add</i></a></li>

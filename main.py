@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, jsonify
 from os.path import join, dirname, realpath
+from werkzeug.utils import secure_filename
+import os
 import json
 import controle
+
 app = Flask(__name__, static_url_path='/static')
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'uploads')
@@ -20,7 +23,6 @@ def login():
     if request.method == 'POST':
         try:
             usuario = controle.logar(request.form['user'],request.form['password'])
-            print(usuario)
             session['MATRICULA'] = usuario['MATRICULA']
             session['NV'] = usuario['NV']
             return render_template('home.html')
@@ -99,7 +101,6 @@ def atualizar_agente():
             gestores = controle.gestor()
             jornadas = controle.jornada()
             meses = controle.mes()
-            print(agente)
             return render_template('agente_atualizar.html',id = request.args.get('id'),agente = agente, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
 
         if request.method == "POST":
@@ -130,7 +131,8 @@ def cadastrar_operador():
     gestores = controle.gestor()
     jornadas = controle.jornada()
     meses = controle.mes()
-    return render_template('agente_cadastro.html' , setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
+    status = controle.status()
+    return render_template('agente_cadastro.html' , setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses , status= status)
 
 @app.route('/cadastrar_operador_post', methods=['POST'])
 def cadastrar_operador_post():
@@ -151,6 +153,32 @@ def cadastrar_operador_post():
         request.form['sabado'],
         request.form['mes']
     ).cadastrar()
+    return redirect(url_for('agentes'))
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/importar', methods=['POST','GET'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            arquivo = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(arquivo)
+            controle.importar(arquivo)
     return redirect(url_for('agentes'))
 
 if __name__ == "__main__":
