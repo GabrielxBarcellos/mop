@@ -30,7 +30,7 @@ function download_csv(csv_string){
     var universalBOM = "\uFEFF";
     var a = window.document.createElement('a');
     a.setAttribute('href', 'data:text/csv; charset=utf-8,' + encodeURIComponent(universalBOM+csv_string));
-    a.setAttribute('download', 'example.csv');
+    a.setAttribute('download', 'mop.csv');
     window.document.body.appendChild(a);
     a.click();
 }

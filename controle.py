@@ -3,7 +3,7 @@ import csv
 import os
 
 class agente():
-    def __init__(self, cad, nome, ramal ,pausa ,celular, monitoria, cc, setor, cargo, funcao, nvl, gestor, jornada, sab, mes_ano ):
+    def __init__(self, cad, nome, ramal ,pausa ,celular, monitoria, cc, setor, cargo, funcao, nvl, gestor, jornada, sab, mes_ano, data_adm, data_desligamento,status):
         self.cad = cad
         self.nome = nome
         self.ramal = ramal
@@ -19,6 +19,101 @@ class agente():
         self.jornada = jornada
         self.sab = sab
         self.mes_ano = mes_ano
+        self.data_adm =data_adm
+        self.data_desligamento = data_desligamento,
+        self.status = status
+    def importar_v2(self):
+    SQL = """
+    BEGIN TRAN 
+
+    IF EXISTS (SELECT * 
+            FROM   nc_mop WITH (updlock, serializable) 
+            WHERE  
+                    CAD = '{CAD}'
+                    MES_ANO = '{MES_ANO}'
+    BEGIN 
+        UPDATE nc_mop 
+        SET    cad = '456' 
+        WHERE  
+        SET
+                    CAD = '{CAD}',
+                    NOME = '{NOME}',
+                    RAMAL = '{RAMAL}',
+                    PAUSAS = '{PAUSAS}',
+                    CELULAR = '{CELULAR}',
+                    MONITORIA = '{MONITORIA}',
+                    SETOR = '{SETOR}',
+                    CARGO = '{CARGO}',
+                    FUNCAO = '{FUNCAO}',
+                    NVL = '{NVL}',
+                    GESTOR = '{GESTOR}',
+                    JORNADA = '{JORNADA}',
+                    SAB = '{SAB}',
+                    MES_ANO = '{MES_ANO}'
+                ) 
+    END 
+    ELSE 
+    BEGIN 
+        INSERT INTO nc_mop 
+                    (
+                    CAD,
+                    NOME,
+                    RAMAL,
+                    PAUSAS,
+                    CELULAR,
+                    MONITORIA,
+                    CC,
+                    SETOR,
+                    CARGO,
+                    FUNCAO,
+                    NVL,
+                    GESTOR,
+                    JORNADA,
+                    SAB,
+                    MES_ANO
+                    ) 
+        VALUES      
+                    CAD = '{CAD}',
+                    NOME = '{NOME}',
+                    RAMAL = '{RAMAL}',
+                    PAUSAS = '{PAUSAS}',
+                    CELULAR = '{CELULAR}',
+                    MONITORIA = '{MONITORIA}',
+                    SETOR = '{SETOR}',
+                    CARGO = '{CARGO}',
+                    FUNCAO = '{FUNCAO}',
+                    NVL = '{NVL}',
+                    GESTOR = '{GESTOR}',
+                    JORNADA = '{JORNADA}',
+                    SAB = '{SAB}',
+                    MES_ANO = '{MES_ANO}',
+                    DATA_ADM ='{DATA_ADM},
+                    DATA_DESLIGAMENTO = '{DATA_DESLIGAMENTO}',
+                    STATUS = '{STATUS}'
+    END 
+
+    COMMIT TRAN 
+    """.format(
+                    CAD= self.cad,
+                    NOME= self.nome,
+                    RAMAL= self.ramal               ,
+                    PAUSAS= ,
+                    CELULAR=,
+                    MONITORIA=,
+                    CC=,
+                    SETOR=,
+                    CARGO=,
+                    FUNCAO=,
+                    NVL=,
+                    GESTOR=,
+                    JORNADA=,
+                    SAB=,
+                    MES_ANO=,
+                    DATA_ADM =,
+                    DATA_DESLIGAMENTO =,
+                    STATUS =,
+    )
+    return SQL
 
     @staticmethod
     def buscar_por_id(ID):
@@ -28,7 +123,25 @@ class agente():
 
 
     def cadastrar(self):
-        SQL = """INSERT INTO NC_MOP(CAD,NOME,RAMAL,PAUSAS,CELULAR,MONITORIA,CC,SETOR,CARGO,FUNCAO,NVL,GESTOR,JORNADA,SAB,MES_ANO) 
+        SQL = """INSERT INTO NC_MOP(
+        CAD,
+        NOME,
+        RAMAL,
+        PAUSAS,
+        CELULAR,
+        MONITORIA,
+        CC,
+        SETOR,
+        CARGO,
+        FUNCAO,
+        NVL,
+        GESTOR,
+        JORNADA,
+        SAB,
+        MES_ANO,
+        DATA_ADM,
+        DATA_DESLIGAMENTO,
+        STATUS) 
                              VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
                                  self.cad,
                                  self.nome,
@@ -44,7 +157,10 @@ class agente():
                                  self.gestor,
                                  self.jornada,
                                  self.sab,
-                                 self.mes_ano
+                                 self.mes_ano,
+                                 self.data_adm,
+                                 self.data_desligamento,
+                                 self.status
                              )
         return ado.executar(SQL)
 
@@ -217,3 +333,7 @@ def importar(arquivo):
 
     ado.executar(csv_to_sql(arquivo))
     os.remove(arquivo)
+
+
+
+print(importar_v2('teste'))
