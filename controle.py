@@ -20,105 +20,16 @@ class agente():
         self.sab = sab
         self.mes_ano = mes_ano
         self.data_adm =data_adm
-        self.data_desligamento = data_desligamento,
+        self.data_desligamento = data_desligamento
         self.status = status
-    def importar_v2(self):
-    SQL = """
-    BEGIN TRAN 
-
-    IF EXISTS (SELECT * 
-            FROM   nc_mop WITH (updlock, serializable) 
-            WHERE  
-                    CAD = '{CAD}'
-                    MES_ANO = '{MES_ANO}'
-    BEGIN 
-        UPDATE nc_mop 
-        SET    cad = '456' 
-        WHERE  
-        SET
-                    CAD = '{CAD}',
-                    NOME = '{NOME}',
-                    RAMAL = '{RAMAL}',
-                    PAUSAS = '{PAUSAS}',
-                    CELULAR = '{CELULAR}',
-                    MONITORIA = '{MONITORIA}',
-                    SETOR = '{SETOR}',
-                    CARGO = '{CARGO}',
-                    FUNCAO = '{FUNCAO}',
-                    NVL = '{NVL}',
-                    GESTOR = '{GESTOR}',
-                    JORNADA = '{JORNADA}',
-                    SAB = '{SAB}',
-                    MES_ANO = '{MES_ANO}'
-                ) 
-    END 
-    ELSE 
-    BEGIN 
-        INSERT INTO nc_mop 
-                    (
-                    CAD,
-                    NOME,
-                    RAMAL,
-                    PAUSAS,
-                    CELULAR,
-                    MONITORIA,
-                    CC,
-                    SETOR,
-                    CARGO,
-                    FUNCAO,
-                    NVL,
-                    GESTOR,
-                    JORNADA,
-                    SAB,
-                    MES_ANO
-                    ) 
-        VALUES      
-                    CAD = '{CAD}',
-                    NOME = '{NOME}',
-                    RAMAL = '{RAMAL}',
-                    PAUSAS = '{PAUSAS}',
-                    CELULAR = '{CELULAR}',
-                    MONITORIA = '{MONITORIA}',
-                    SETOR = '{SETOR}',
-                    CARGO = '{CARGO}',
-                    FUNCAO = '{FUNCAO}',
-                    NVL = '{NVL}',
-                    GESTOR = '{GESTOR}',
-                    JORNADA = '{JORNADA}',
-                    SAB = '{SAB}',
-                    MES_ANO = '{MES_ANO}',
-                    DATA_ADM ='{DATA_ADM},
-                    DATA_DESLIGAMENTO = '{DATA_DESLIGAMENTO}',
-                    STATUS = '{STATUS}'
-    END 
-
-    COMMIT TRAN 
-    """.format(
-                    CAD= self.cad,
-                    NOME= self.nome,
-                    RAMAL= self.ramal               ,
-                    PAUSAS= ,
-                    CELULAR=,
-                    MONITORIA=,
-                    CC=,
-                    SETOR=,
-                    CARGO=,
-                    FUNCAO=,
-                    NVL=,
-                    GESTOR=,
-                    JORNADA=,
-                    SAB=,
-                    MES_ANO=,
-                    DATA_ADM =,
-                    DATA_DESLIGAMENTO =,
-                    STATUS =,
-    )
-    return SQL
-
+        
+    
     @staticmethod
     def buscar_por_id(ID):
 
         SQL = "SELECT * FROM NC_MOP WHERE ID = " + ID 
+
+        print(SQL)
         return ado.buscar(cmd_sql= SQL)[0]
 
 
@@ -142,7 +53,7 @@ class agente():
         DATA_ADM,
         DATA_DESLIGAMENTO,
         STATUS) 
-                             VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
+                             VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
                                  self.cad,
                                  self.nome,
                                  self.ramal,
@@ -177,37 +88,44 @@ class agente():
     def atualizar(self,id):
         SQL = """UPDATE NC_MOP
                 SET
-                    CAD = '{}',
-                    NOME = '{}',
-                    RAMAL = '{}',
-                    PAUSAS = '{}',
-                    CELULAR = '{}',
-                    MONITORIA = '{}',
-                    SETOR = '{}',
-                    CARGO = '{}',
-                    FUNCAO = '{}',
-                    NVL = '{}',
-                    GESTOR = '{}',
-                    JORNADA = '{}',
-                    SAB = '{}',
-                    MES_ANO = '{}'
+                        CAD = '{CAD}',
+                        NOME = '{NOME}',
+                        RAMAL = '{RAMAL}',
+                        PAUSAS = '{PAUSAS}',
+                        CELULAR = '{CELULAR}',
+                        MONITORIA = '{MONITORIA}',
+                        SETOR = '{SETOR}',
+                        CARGO = '{CARGO}',
+                        FUNCAO = '{FUNCAO}',
+                        NVL = '{NVL}',
+                        GESTOR = '{GESTOR}',
+                        JORNADA = '{JORNADA}',
+                        SAB = '{SAB}',
+                        MES_ANO = '{MES_ANO}',
+                        DATA_ADM ='{DATA_ADM}',
+                        DATA_DESLIGAMENTO = '{DATA_DESLIGAMENTO}',
+                        STATUS = '{STATUS}'
                 WHERE
-                    ID = {}""".format(
-                        self.cad,
-                        self.nome,
-                        self.ramal,
-                        self.pausa,
-                        self.celular,
-                        self.monitoria,
-                        self.setor,
-                        self.cargo,
-                        self.funcao,
-                        self.nvl,
-                        self.gestor,
-                        self.jornada,
-                        self.sab,
-                        self.mes_ano,
-                        id
+                    ID = {id}""".format(
+                        CAD= self.cad,
+                        NOME= self.nome,
+                        RAMAL= self.ramal               ,
+                        PAUSAS= self.pausa,
+                        CELULAR=self.celular,
+                        MONITORIA= self.monitoria,
+                        CC=self.cc,
+                        SETOR= self.setor,
+                        CARGO=self.cargo,
+                        FUNCAO=self.funcao,
+                        NVL=self.nvl,
+                        GESTOR=self.gestor,
+                        JORNADA=self.jornada,
+                        SAB=self.sab,
+                        MES_ANO=self.mes_ano,
+                        DATA_ADM =self.data_adm,
+                        DATA_DESLIGAMENTO =self.data_desligamento,
+                        STATUS =self.status,
+                        id= id
                     )
 
         ado.executar(SQL)
@@ -289,51 +207,3 @@ def logar(usuario,senha):
     SQL = "SELECT * FROM NC_USER WHERE MATRICULA = {} AND SENHA = '{}'".format(usuario,senha)
     return ado.buscar(cmd_sql=SQL)[0]
 
-def csv_to_sql(arquivo_csv):
-
-    with open(arquivo_csv,encoding='utf-8') as arquivo:
-
-        linhas = csv.reader(arquivo, delimiter=";")
-
-        contagem = 0
-        SQL = 'INSERT INTO NC_MOP('
-        for linha in linhas:            
-            #CABEÇALHO
-
-            if (contagem == 0) :
-                
-                ignora = 0 #ignora o id
-                for item in linha:
-                    if ignora != 0:
-                        SQL += str(item).strip() + ","
-                    ignora += 1
-
-
-
-                SQL = SQL.strip()
-                SQL = SQL[:-2] +') VALUES '
-                contagem += 1
-
-                continue
-
-            #corpo
-            SQL+="("
-            ignora = 0 #ignora o id
-            for item in linha:
-                if ignora != 0 :
-                    SQL += "'" +item + "',"
-                ignora += 1
-            SQL = SQL[:-4] + "),"
-            contagem +=1
-        SQL = SQL[:-1]
-        print(SQL)
-        return SQL
-
-def importar(arquivo):
-
-    ado.executar(csv_to_sql(arquivo))
-    os.remove(arquivo)
-
-
-
-print(importar_v2('teste'))

@@ -115,6 +115,21 @@
         {% endfor %}
       </select>
     </div>
+    <div class="input-fild col s3">
+      <input type="text" id="adm" name="adm" class="validate datepicker" placeholder="Data de admissão">
+    </div>
+    <div class="input-fild col s3">
+      <input type="text" id="dms" name="dms" class="validate datepicker ignorar" placeholder="Data de demissão">
+    </div>
+    <div class="input-field col s3" style="margin-top: 0px;">
+    <select id='status' name="status" class="">
+      <label>Status</label>
+      <option value="" selected>Status</option>
+      {% for item in status %}
+      <option value="{{item["STATUS"]}}">{{item["STATUS"]}}</option>
+      {% endfor %}
+    </select>
+    </div>
     <button class=" btn-large btn waves-effect waves-light red right enviar" type="submit">CADASTRAR
       <i class="material-icons right">send</i>
     </button>
@@ -126,7 +141,7 @@
 
 $('.enviar').click(function (e) {
 event.preventDefault();
-if (valida_form('.ignorar')) {
+if (valida_form('ignorar')) {
 $('.formulario').submit()
 }
 })

@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 import json
 import controle
+import importas
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -14,6 +15,16 @@ app.secret_key = 'lady'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+# Decorator
+def requer_autenticacao(f):
+    def funcao_decorada(*args, **kwargs):
+        # Verifica session['logado']
+        if ('logado' not in session):
+            # Retorna para a URL de login caso o usuário não esteja logado
+            return redirect(url_for('index'))
+
+        return f(*args, **kwargs)
+    return funcao_decorada
 
 @app.route('/', methods=['GET','POST'])
 def login():
@@ -75,7 +86,10 @@ def agentes():
         request.form['gestor'],
         request.form['jornada'],
         request.form['sabado'],
-        request.form['mes']
+        request.form['mes'],
+        request.form['adm'],
+        request.form['dms'],
+        request.form['status']
     ).filtrar()
 
     headers = {'':''}
@@ -122,7 +136,10 @@ def atualizar_agente():
             request.form['gestor'],
             request.form['jornada'],
             request.form['sabado'],
-            request.form['mes']
+            request.form['mes'],
+            request.form['adm'],
+            request.form['dms'],
+            request.form['status']
         ).atualizar(id)
             return redirect(url_for("agentes"))
 
@@ -153,7 +170,10 @@ def cadastrar_operador_post():
         request.form['gestor'],
         request.form['jornada'],
         request.form['sabado'],
-        request.form['mes']
+        request.form['mes'],
+        request.form['adm'],
+        request.form['dms'],
+        request.form['status']
     ).cadastrar()
     return redirect(url_for('agentes'))
 
@@ -180,8 +200,8 @@ def upload_file():
             filename = secure_filename(file.filename)
             arquivo = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(arquivo)
-            controle.importar(arquivo)
-    return redirect(url_for('agentes'))
+            importas.importar_agentes(arquivo)
+    return redirect(url_for('agentes')) 
 
 if __name__ == "__main__":
     app.run(debug=True)

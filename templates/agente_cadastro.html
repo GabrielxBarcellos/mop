@@ -3,6 +3,7 @@
 {%block conteudo%}
 
 <h1 class="red-text">Cadastro de operador</h1>
+<div class="erros red-text"></div>
 <div class="section">
   <form action="{{url_for('cadastrar_operador_post')}}" method="POST" class="row formulario">
     <div class="input-field col s2">
@@ -117,10 +118,10 @@
       <input type="text" id="adm" name="adm" class="validate datepicker" placeholder="Data de admissão">
     </div>
     <div class="input-fild col s3">
-      <input type="text" id="dms" name="dms" class="validate datepicker" placeholder="Data de demissão">
+      <input type="text" id="dms" name="dms" class="validate datepicker ignorar" placeholder="Data de demissão">
     </div>
     <div class="input-field col s3" style="margin-top: 0px;">
-    <select id='mes' name="mes" class="">
+    <select id='status' name="status" class="">
       <label>Status</label>
       <option value="" selected>Status</option>
       {% for item in status %}
@@ -139,7 +140,7 @@
 
 $('.enviar').click(function (e) {
 event.preventDefault();
-if (valida_form('.ignorar')) {
+if (valida_form('ignorar')) {
 $('.formulario').submit()
 }
 })
