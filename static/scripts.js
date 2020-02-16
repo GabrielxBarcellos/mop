@@ -13,12 +13,17 @@ function valida_form(classe_ignora){
              
         
          }
-         console.log('p2')
     });
-    var erros = $('.erro').length
-    console.log('qdt erros:' + erros)
 
-    if (erros >0){
+    $('.erros li').remove()
+    if ($('.erro').length >0){
+      //adiciona mostra erro
+      $.each($('.erro'), function (indexInArray, valueOfElement) { 
+        input_err = $(valueOfElement).attr('name')
+        msg_err = $('<li>').text(input_err + ' não preenchido') 
+        $('.erros').append(msg_err)
+         
+      });
         return false
     }else{
         return true

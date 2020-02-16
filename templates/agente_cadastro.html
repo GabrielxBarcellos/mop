@@ -3,7 +3,7 @@
 {%block conteudo%}
 
 <h1 class="red-text">Cadastro de operador</h1>
-<div class="erros red-text"></div>
+<ul class="erros red-text"></ul>
 <div class="section">
   <form action="{{url_for('cadastrar_operador_post')}}" method="POST" class="row formulario">
     <div class="input-field col s2">
@@ -21,7 +21,7 @@
     <div class="input-field col s2">
       <select id='pausa' name="pausa">
         <label>PAUSA</label>
-        <option value="" selected disabled>PAUSA</option>
+        <option value="" selected >PAUSA</option>
         <option value="SIM">SIM</option>
         <option value="NAO">NAO</option>
       </select>
@@ -29,7 +29,7 @@
     <div class="input-field col s2">
       <select id='monitoria' name="monitoria">
         <label>MONITORIA</label>
-        <option value="" selected disabled>MONITORIA</option>
+        <option value="" selected >MONITORIA</option>
         <option value="SIM">SIM</option>
         <option value="NAO">NAO</option>
       </select>
@@ -37,7 +37,7 @@
     <div class="input-field col s2">
       <select name="celular">
         <label>CELULAR</label>
-        <option value="" selected disabled>CELULAR</option>
+        <option value="" selected >CELULAR</option>
         <option value="SIM">SIM</option>
         <option value="NAO">NAO</option>
       </select>
@@ -45,7 +45,7 @@
     <div class="input-field col s2">
       <select id='sabado' name="sabado">
         <label>TRABALHA SABADO</label>
-        <option value="" selected disabled>TRABALHA SABADO</option>
+        <option value="" selected >TRABALHA SABADO</option>
         <option value="SIM">SIM</option>
         <option value="NAO">NAO</option>
       </select>
@@ -53,7 +53,7 @@
     <div class="input-field col s2">
       <select id='cc' name="cc">
         <label>CC</label>
-        <option value="" selected>CC</option>
+        <option value="" >CC</option>
         {% for item in ccs %}
         <option value="{{item["CC"]}}">{{item["CC"]}}</option>
         {% endfor %}
@@ -62,7 +62,7 @@
     <div class="input-field col s2">
       <select id='nvl' name="nvl">
         <label>NVL</label>
-        <option value="" selected disabled>NVL</option>
+        <option value="" selected >NVL</option>
         <option value="ADM">ADM</option>
         <option value="AUX">AUX</option>
         <option value="OPE">OPE</option>

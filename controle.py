@@ -97,6 +97,7 @@ class agente():
                         SETOR = '{SETOR}',
                         CARGO = '{CARGO}',
                         FUNCAO = '{FUNCAO}',
+                        CC = '{CC}',
                         NVL = '{NVL}',
                         GESTOR = '{GESTOR}',
                         JORNADA = '{JORNADA}',
@@ -147,7 +148,9 @@ class agente():
             ('GESTOR',self.gestor),
             ('JORNADA',self.jornada),
             ('SAB',self.sab),
-            ('MES_ANO',self.mes_ano)
+            ('MES_ANO',self.mes_ano),
+            ('DATA_DESLIGAMENTO',self.data_desligamento),
+            ('STATUS',self.status)
             ]
 
         lista_somente_elemento_preenchido = []
@@ -170,7 +173,16 @@ class agente():
             return mop()
 
 def mop():
-    retorno  = ado.buscar( table="NC_MOP")
+    SQL = """
+    SELECT 
+            A.*,B.HRS,B.TURNO
+            FROM NC_MOP AS A
+        LEFT JOIN
+            NC_JORNADA AS B
+        ON
+            A.JORNADA = B.JORNADA
+         """
+    retorno  = ado.buscar( cmd_sql=SQL)
     return retorno
 
 def jornada():
@@ -186,12 +198,24 @@ def setor():
     SQL = 'SELECT DISTINCT SETOR FROM NC_SETOR'
     return ado.buscar( cmd_sql= SQL)
 
+def funcao_():
+    SQL = "SELECT DISTINCT FUNCAO FROM NC_SETOR"
+    return ado.buscar(cmd_sql= SQL) 
+
 def funcao(setor):
     SQL = "SELECT DISTINCT FUNCAO FROM NC_SETOR WHERE SETOR = '{}'".format(setor)
+    print(SQL)
     return ado.buscar( cmd_sql= SQL)
     
 def cargo(setor,funcao):
     SQL = "SELECT DISTINCT CARGO FROM NC_SETOR WHERE SETOR = '{}' and FUNCAO = '{}'".format(setor,funcao)
+    return ado.buscar( cmd_sql= SQL)
+
+def cargo_():
+    SQL = """SELECT DISTINCT CARGO FROM(
+                SELECT DISTINCT CARGO FROM NC_SETOR
+                UNION
+                SELECT DISTINCT CARGO FROM NC_MOP) AS A """
     return ado.buscar( cmd_sql= SQL)
 
 def mes():
@@ -206,4 +230,7 @@ def logar(usuario,senha):
 
     SQL = "SELECT * FROM NC_USER WHERE MATRICULA = {} AND SENHA = '{}'".format(usuario,senha)
     return ado.buscar(cmd_sql=SQL)[0]
+def buscar_importados():
+    SQL = "SELECT * FROM NC_USER WHERE STATUS = 'i'"
+    return ado.buscar(cmd_sql=SQL)
 

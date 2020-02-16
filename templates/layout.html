@@ -23,10 +23,12 @@
           <li><div class="brand-logo" style="padding: 0 32px;"><a href="{{url_for('home')}}"><h2 class="red-text">MOP</h2></a> </div></div></li>
           <li><div class="divider"></div></li>
           <li><a class="waves-effect waves-light"><i class="material-icons left">person</i>Usuário: {{session['MATRICULA']}}</a></li>
-          <li><a class="waves-effect waves-light"><i class="material-icons left">power_settings_new</i>Deslogar</a></li>
+          <li><a class="waves-effect waves-light" href="{{url_for('logout')}}"><i class="material-icons left">power_settings_new</i>Deslogar</a></li>
           <li><div class="divider"></div></li>
           <li><a href="{{url_for('agentes')}}"><i class="material-icons left">people</i>Agentes</a></li>
-          <li><a><i class="material-icons left">thumbs_up_down</i>Solicitacoes de alteração</a></li>
+          <li><div class="divider"></div></li>
+          <li><a href="{{url_for('setor_select')}}"><i class="material-icons left">assignment_ind</i>Setor</a></li>
+          <li><a href="{{url_for('usuarios')}}"><i class="material-icons left">account_circle</i>Usuários</a></li>
         </ul>
         <div style="margin-top: 2em; margin-left: 2em;">
           <a class="btn-floating btn-large red sidenav-trigger" data-target="slide-out" >

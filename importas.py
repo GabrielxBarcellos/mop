@@ -1,3 +1,4 @@
+
 from controle import agente as agente_obj
 import csv
 from datetime import datetime
@@ -32,6 +33,8 @@ def importar_v2(agente_obj):
             SET    
  
                         CAD = '{CAD}',
+                        CC = '{CC3
+                        }',
                         NOME = '{NOME}',
                         CARGO = '{CARGO}',
                         MES_ANO = '{MES_ANO}',

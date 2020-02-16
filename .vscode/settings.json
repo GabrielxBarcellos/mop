@@ -9,5 +9,5 @@
     "python.testing.pytestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.unittestEnabled": true,
-    "python.pythonPath": "myenv\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Pichau\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
 }

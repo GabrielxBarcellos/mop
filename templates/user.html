@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+
+{%block conteudo%}
+<table class="responsive-table striped">
+    <thead>
+        <tr>
+            <th>Matricula</th>
+            <th>Senha</th>
+            <th>NV</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <input type="number" placeholder="Matricula" id="matricula">
+            </td>
+            <td>
+                <input type="password" placeholder="Senha" id="senha">
+            </td>
+            <td>
+                <input type="number" placeholder="NV" id="nv">
+            </td>
+            <td class="row">
+                <a class="waves-effect waves-light btn green col s8 btn-user" matricula =''><i class="material-icons left">keyboard_arrow_right</i>criar</a>
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td {{user['MATRICULA']}}>
+                    <input type="number" placeholder="Matricula" id="matricula" value="{{user['MATRICULA']}}" disabled>
+                </td>
+                <td>
+                    <input type="password" value="{{user['SENHA']}}" id="senha">
+                </td>
+                <td>
+                    <input type="number" value="{{user['NV']}}"  min = "1" max="10" id="nv">
+                </td>
+                <td class="row">
+                    <a class="waves-effect waves-light btn orange btn-user" value = '{{user['MATRICULA']}}'><i class="material-icons left">loop</i>atualizar</a>
+                </td>
+                <td>
+                    <a class="waves-effect waves-light btn red btn-user-deletar" value = '{{user['MATRICULA']}}'><i class="material-icons left">delete</i>deletar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+
+</script>
+{% endblock %}
+{% block script%}
+$('.btn-user').click(function () { 
+    matricula = $(this).closest('tr').find('#matricula').val()
+    senha = $(this).closest('tr').find('#senha').val()
+    nv = $(this).closest('tr').find('#nv').val()
+    var user =[matricula,senha,nv]
+    $.ajax({
+        url: '{{url_for('usuarios')}}',
+        data: {data: JSON.stringify(user)},
+        type: 'POST',
+        success: function(response){
+        alert(response)
+        document.location.reload(true)}
+    })
+ })
+ $('.btn-user-deletar').click(function () { 
+    if(confirm('Deseja realmente excluir?')){
+        matricula = $(this).closest('tr').find('#matricula').val()
+        $.ajax({
+            url: '{{url_for('usuario_deletar')}}',
+            data: {data: matricula},
+            type: 'POST',
+            success: function(response){
+            alert(response)
+            document.location.reload(true)}
+        })
+    }
+
+ })
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+
+{%block conteudo%}
+
+<table class="responsive-table striped">
+    <thead>
+  
+      <tr>
+        {% for item in keys %}
+        <th>
+          {{ item }}
+        </th>
+        {% endfor %}
+        <th></th>
+        <th></th>
+  
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" placeholder="NOVO" disabled>  
+        </td>
+        <td>
+          <input type="text" placeholder="SETOR">  
+        </td>
+        <td>
+          <input type="text" placeholder="CARGO">  
+        </td>
+        <td>
+          <input type="text" placeholder="FUNCAO">  
+        </td>
+        <td class="row">
+          <a class="waves-effect waves-light btn green col s8 btn-setor"><i class="material-icons left">keyboard_arrow_right</i>criar</a>
+        </td>
+        <td></td>
+      </tr>
+      {% for item in setores %}
+      <tr id_banco = '{{item["ID"]}}'>
+        {% for subitem in item.values() %}
+        <td><input type="text" value="{{subitem}}"></td>
+        {% endfor %}
+        <td>
+          <a class="waves-effect waves-light btn orange btn-setor" id_banco = '{{item["ID"]}}'><i class="material-icons left">loop</i>atualizar</a>
+        </td>
+        <td>
+          <a class="waves-effect waves-light btn red btn-setor-deletar" id_banco = '{{item["ID"]}}'><i class="material-icons left">delete</i>deletar</a>
+        </td>
+      </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+  <script>
+    
+  </script>
+{% endblock %}
+{% block script%}
+$('.btn-setor').click(function () {
+  setor = []
+  $.each($(this).closest('tr').find('input'), function (indexInArray, valueOfElement) {
+    setor.push($(valueOfElement).val())
+  });
+  var obj = setor
+  console.log(obj)
+  $.ajax({
+    url: '{{url_for('setor_select')}}',
+    data: {data: JSON.stringify(obj)},
+    type: 'POST',
+    success: function(response){
+      alert(response)
+      document.location.reload(true);
+    }
+    })
+
+  
+  })
+
+  $('.btn-setor-deletar').click(function () {
+
+    if (confirm("Tem certeza que deseja deletar?")){
+    var obj = $(this).attr('id_banco')
+    console.log(obj)
+    $.ajax({
+      url: '{{url_for('setor_delete')}}',
+      data: {data: JSON.stringify(obj)},
+      type: 'POST',
+      success: function(response){
+        alert(response)
+        document.location.reload(true);
+      }
+      })
+    }
+  
+    
+    })
+
+{% endblock %}
