@@ -259,6 +259,9 @@ def usuario_deletar():
         reposta = json.loads(request.form['data'])
         user.delete_user(reposta)
         return 'Usuario deletado'
-
+@app.route('/trocar_senha',methods=['POST'])
+def trocar_senha():
+    user.trocar_senha(session.get('MATRICULA'),request.form['data'])
+    return "Senha trocada :)"
 if __name__ == "__main__":
     app.run(debug=True)

@@ -22,7 +22,7 @@
         <ul id="slide-out" class="sidenav">
           <li><div class="brand-logo" style="padding: 0 32px;"><a href="{{url_for('home')}}"><h2 class="red-text">MOP</h2></a> </div></div></li>
           <li><div class="divider"></div></li>
-          <li><a class="waves-effect waves-light"><i class="material-icons left">person</i>Usuário: {{session['MATRICULA']}}</a></li>
+          <li><a class="waves-effect waves-light modal-trigger" href="#modaluser"><i class="material-icons left">person</i>Usuário: {{session['MATRICULA']}}</a></li>
           <li><a class="waves-effect waves-light" href="{{url_for('logout')}}"><i class="material-icons left">power_settings_new</i>Deslogar</a></li>
           <li><div class="divider"></div></li>
           <li><a href="{{url_for('agentes')}}"><i class="material-icons left">people</i>Agentes</a></li>
@@ -39,6 +39,27 @@
         <!--container-->
         <div class="container">
 
+
+  <!-- troca de senha-->
+  <div id="modaluser" class="modal">
+    <div class="modal-content">
+      <h4>Mude sua senha</h4>
+      <form class="row">
+        <div class="input-field col s3">
+          <i class="material-icons prefix">https</i>
+          <input type="password" id="senha1" class="validate">
+          <label for="icon_prefix">senha</label>
+        </div>
+        <div class="input-field col s3">
+          <input type="password" id="senha2" class="validate">
+          <label for="icon_prefix">Confirmar senha</label>
+        </div>
+        <div class="row">
+          <a class="btn" style="margin-top: 2%" id="btn-senha">Confirmar</a>
+        </div>
+      </form>
+    </div>
+  </div>
         {% block conteudo %}
         {% endblock %}
 
@@ -145,12 +166,32 @@
 
 
 
+
 </script>
           <script src="static\scripts.js"></script>
           
 <script>
   {% block script %}{% endblock %}
 </script>
-    </body>
+
+<script>
+$('#btn-senha').click(function () { 
+  if ($('#senha1').val() == $('#senha2').val()){
+    obj = $('#senha1').val()
+    $.ajax({
+      url: '{{url_for('trocar_senha')}}',
+      data: {data: obj},
+      type: 'POST',
+      success: function(response){
+        alert('Senha Trocada! :)')
+        document.location.reload(true);
+      }
+      })
+  }else{
+    alert('As senhas não são iguais! :(')
+  }
+ })
+</script>
+</body>
 
 </html>

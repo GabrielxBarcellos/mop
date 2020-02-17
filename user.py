@@ -30,3 +30,12 @@ def user_novo_update(user):
 def delete_user(id):
     SQL = "DELETE FROM NC_USER WHERE MATRICULA ={}".format(id)
     return ado.executar(SQL)
+
+def trocar_senha(usuario , senha):
+    SQL = """UPDATE NC_USER
+            SET
+                MATRICULA = {MATRICULA},
+                SENHA = '{SENHA}'
+            WHERE MATRICULA = {MATRICULA}""".format(MATRICULA = usuario, SENHA = senha)
+    print(SQL)
+    return ado.executar(SQL)
