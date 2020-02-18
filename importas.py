@@ -1,11 +1,34 @@
 
 from controle import agente as agente_obj
+from controle import mop
 import csv
 from datetime import datetime
 import ado
 import os
+import datetime
 
 
+def backup_mop(pasta):
+    mop_ = mop()
+    cabecalho = []
+    linha = []
+    lista = []
+    lista.append(list(mop_[0].keys()))
+    for linha in mop_:
+        aux = []
+        for item in mop_[0].keys():
+            aux.append(linha[item])
+        lista.append(aux)
+
+    filename = str(datetime.datetime.now())
+    filename = filename.replace(":","-")+'.csv'
+
+    arquivo = os.path.join(os.path.join(pasta, 'backup_importas'),filename)
+    with open(arquivo, "w", newline="", encoding='utf-8') as f:
+        writer = csv.writer(f, delimiter = ";")
+        writer.writerows(lista)
+
+    return True
 
 
 def listToDict(lstA, lstB):
@@ -16,8 +39,8 @@ def listToDict(lstA, lstB):
 
 
 def dt_br_to_dt(data_str):
-    b = datetime.strptime(data_str,'%d/%m/%Y')
-    return datetime.strftime(b,'%Y-%m-%d')
+    b = datetime.datetime.strptime(data_str,'%d/%m/%Y')
+    return datetime.datetime.strftime(b,'%Y-%m-%d')
 def importar_v2(agente_obj):
         SQL = """
         BEGIN TRAN 
@@ -33,8 +56,7 @@ def importar_v2(agente_obj):
             SET    
  
                         CAD = '{CAD}',
-                        CC = '{CC3
-                        }',
+                        CC = '{CC}',
                         NOME = '{NOME}',
                         CARGO = '{CARGO}',
                         MES_ANO = '{MES_ANO}',

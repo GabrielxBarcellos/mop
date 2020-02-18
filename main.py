@@ -207,7 +207,8 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
-
+        endereco = app.config['UPLOAD_FOLDER']
+        importas.backup_mop(endereco)
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -219,7 +220,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            arquivo = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            arquivo = os.path.join(endereco, filename)
             file.save(arquivo)
             importas.importar_agentes(arquivo)
     return redirect(url_for('agentes')) 
