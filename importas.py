@@ -7,7 +7,7 @@ import ado
 import os
 import datetime
 
-
+# tratando importa RH
 def backup_mop(pasta):
     mop_ = mop()
     cabecalho = []
@@ -30,17 +30,16 @@ def backup_mop(pasta):
 
     return True
 
-
 def listToDict(lstA, lstB):
     zippedLst = zip(lstA, lstB)
     op = dict(zippedLst)
     print(op)
     return op
 
-
 def dt_br_to_dt(data_str):
     b = datetime.datetime.strptime(data_str,'%d/%m/%Y')
     return datetime.datetime.strftime(b,'%Y-%m-%d')
+
 def importar_v2(agente_obj):
         SQL = """
         BEGIN TRAN 
@@ -171,6 +170,7 @@ def importar_agentes (arquivo):
         print(agent.data_desligamento)
         importar_v2(agent)
     return True
+
 def csv_to_sql(arquivo_csv):
 
     with open(arquivo_csv,encoding='utf-8') as arquivo:
@@ -215,3 +215,34 @@ def importar(arquivo):
 
     ado.executar(csv_to_sql(arquivo))
     os.remove(arquivo)
+# end importa RH
+
+
+#copiar mes
+
+    
+def copiar_mes(mes_antigo, mes_novo,pasta_backup):
+    def copiar_mes_sql(mes_antigo, mes_novo):
+        CABECALHO =  list(ado.buscar(cmd_sql="SELECT TOP 1 * FROM NC_MOP")[0].keys())
+        SQL = "SELECT "
+        campos = ""
+        for campo in CABECALHO:
+            if campo != "ID" and campo != "MES_ANO":
+                campos = campos + campo+","
+        
+        campos = campos[:len(campos)-1]
+
+        SQL = SQL + campos +  ", '{}' MES_ANO  FROM NC_MOP WHERE MES_ANO = '{}'".format(mes_novo,mes_antigo)
+        SQL_INSERT = "INSERT INTO NC_MOP ("+campos+", MES_ANO) " + SQL
+        ado.executar(SQL_INSERT)
+        return True
+
+    try:
+        backup_mop(pasta_backup)
+    except:
+        return print("nao foi possível fazer o backup")
+        
+    SQL = "DELETE FROM NC_MOP WHERE MES_ANO = '{}'".format(mes_novo)
+    print(ado.executar(SQL))
+    copiar_mes_sql(mes_antigo,mes_novo)
+    return print("mes copiado")

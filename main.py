@@ -115,7 +115,6 @@ def agentes():
 
     return render_template('agentes.html',mop = mop , keys = headers, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses, cargos = controle.cargo_(), funcoes = controle.funcao_(), status= controle.status() )
 
-
 @app.route('/deletar_agente', methods=['POST'])
 @nvl_adm
 def deletar_agente():
@@ -260,9 +259,23 @@ def usuario_deletar():
         reposta = json.loads(request.form['data'])
         user.delete_user(reposta)
         return 'Usuario deletado'
+
 @app.route('/trocar_senha',methods=['POST'])
 def trocar_senha():
     user.trocar_senha(session.get('MATRICULA'),request.form['data'])
     return "Senha trocada :)"
+
+@app.route('/copiar_mes',methods=['POST','GET'])
+def copiar_mes():
+
+    meses = controle.mes()
+    if request.method == 'GET':
+        return render_template('copiar_mes.html', meses = meses)
+    
+    importas.copiar_mes(request.form['mes_antigo'],request.form['mes_novo'],app.config['UPLOAD_FOLDER'])
+    flash('MES COPIADO')
+    return render_template('copiar_mes.html', meses = meses)
+    
+
 if __name__ == "__main__":
     app.run(debug=True)

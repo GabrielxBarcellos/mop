@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{%block conteudo%}
+
+<h1>Copiar mes</h1>
+<form class="row" action="{{url_for('copiar_mes')}}" method="POST">
+    <div class="input-field col s2">
+        <select id='mes' name="mes_antigo">
+          <label>Meses</label>
+          <option value="" selected>MES ANTIGO</option>
+          {% for item in meses %}
+          <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='mes' name="mes_novo">
+          <label>Meses</label>
+          <option value="" selected>MES NOVO </option>
+          {% for item in meses %}
+          <option value="{{item["MES_ANO"]}}">{{item["MES_ANO"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button class="btn">COPIAR</button>
+</form>
+
+{% endblock %}
+{% block script%}
+
+{% endblock %}
