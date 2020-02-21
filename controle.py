@@ -23,7 +23,28 @@ class agente():
         self.data_desligamento = data_desligamento
         self.status = status
         
-    
+    @staticmethod
+    def dict_to_agente(dicionario):
+        return agente(
+        dicionario['CAD'],
+        dicionario['NOME'],
+        dicionario['RAMAL'],
+        dicionario['PAUSA'],
+        dicionario['CELULAR'],
+        dicionario['MONITORIA'],
+        dicionario['CC'],
+        dicionario['SETOR'],
+        dicionario['CARGO'],
+        dicionario['FUNCAO'],
+        dicionario['NVL'],
+        dicionario['GESTOR'],
+        dicionario['JORNADA'],
+        dicionario['SAB'],
+        dicionario['MES_ANO'],
+        dicionario['DATA_ADM'],
+        dicionario['DATA_DESLIGAMENTO'],
+        dicionario['STATUS'])
+
     @staticmethod
     def buscar_por_id(ID):
 

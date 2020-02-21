@@ -48,8 +48,6 @@ def login():
             flash('problema ao logar')
             return render_template('login.html')
 
-
-
 @app.route('/logout')
 def logout():
     session['MATRICULA'] = None
@@ -196,7 +194,6 @@ def cadastrar_operador_post():
     ).cadastrar()
     return redirect(url_for('agentes'))
 
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -275,7 +272,23 @@ def copiar_mes():
     importas.copiar_mes(request.form['mes_antigo'],request.form['mes_novo'],app.config['UPLOAD_FOLDER'])
     flash('MES COPIADO')
     return render_template('copiar_mes.html', meses = meses)
-    
+
+@app.route('/movimentacao', methods = ['POST','GET'])
+def movimentacoes():
+    if request.method =='GET':
+        setores = controle.setor()
+        ccs = controle.cc()
+        meses = controle.mes()
+        status = controle.status()
+        agente = controle.agente.buscar_por_id('2')
+        return render_template('movimentacao.html' , setores = setores, ccs = ccs, meses = meses, status = status, agente = agente)
+
+    agente = controle.agente.dict_to_agente(controle.agente.buscar_por_id(request.form['ID']))
+    agente.nvl = request.form['nvl']
+    agente.setor = request.form['setor']
+    agente.nvl = request.form['funcao']
+    agente.nvl = request.form['cargo']
+    controle.agente.atualizar()
 
 if __name__ == "__main__":
     app.run(debug=True)

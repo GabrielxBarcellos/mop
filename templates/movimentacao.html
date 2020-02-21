@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{%block conteudo%}
+
+<h1 class="red-text">MOVIMENTACAO</h1>
+<form class="row" action="{{url_for('copiar_mes')}}" method="POST">
+    <input type="hidden" name="ID" value="{{agente['ID']}}" >
+    <div class="col s2">
+        <label for="">MATRICULA</label>
+        <input type="text" name="" value="{{agente['CAD']}}" >
+    </div>
+    <div class="col s2">
+        <label for="">NOME</label>
+        <input type="text" name="" value="{{agente['NOME']}}"  >
+    </div>
+    <div class="col s2">
+        <label for="">MES ANO</label>
+        <input type="text" name=""  value="{{agente['MES_ANO']}}">
+    </div>
+    <div class="col s2">
+        <label for="">SETOR_ANTIGA</label>
+        <input type="text" name="" value="{{agente['SETOR']}}">
+    </div>
+    <div class="col s2">
+        <label for="">CARGO_ANTIGA</label>
+        <input type="text" name="" value="{{agente['CARGO']}}">
+    </div>
+    <div class="col s2">
+        <label for="">FUNCAO_ANTIGA</label>
+        <input type="text" name="" value="{{agente['FUNCAO']}}" >
+    </div>
+    <div class="col s2">
+        <label for="">FUNCAO_ANTIGA</label>
+        <input type="text" name="" value="{{agente['NVL']}}" >
+    </div>
+    <div class="col s2">
+        <label>SETOR</label>
+        <select id='setor' name="setor">
+            <option value="" selected>SETOR NOVO</option>
+            {% for item in setores %}
+            <option value="{{item["SETOR"]}}">{{item["SETOR"]}}</option>
+            {% endfor %}
+          </select>
+    </div>
+    <div class="col s2">
+        <label>FUNCAO</label>
+        <select id='funcao' name="funcao">
+            <option value="" selected>FUNCAO NOVO</option>
+          </select>
+    </div>
+    <div class="col s2">
+        <label>CARGO</label>
+        <select id='cargo' name="cargo">
+            <option value="" selected>CARGO NOVO</option>
+          </select>
+    </div>
+    <div class="input-field col s2">
+        <select id='nvl' name="nvl">
+          <label>NVL</label>
+          <option value="" selected >NVL</option>
+          <option value="ADM">ADM</option>
+          <option value="AUX">AUX</option>
+          <option value="OPE">OPE</option>
+        </select>
+      </div>
+    <div class="input-field col s2">
+        <label for="">STATUS_ANTIGO</label>
+        <input type="text" name="" value="{{agente['STATUS']}}">
+      </div>
+      <div class="input-field col s2">
+        <select id='status' name="status" class="">
+            <label>Status</label>
+            <option value="" selected>NOVO STATUS</option>
+            <option value="PROMOVIDO">PROMOVIDO</option>
+            {% for item in status %}
+            <option value="{{item["STATUS"]}}">{{item["STATUS"]}}</option>
+            {% endfor %}
+          </select>
+      </div>
+    <div class="input-fild col s2">
+        <label for="data">DATA_MOVIMENTACAO</label>
+        <input type="text" id="dms" name="dms" class="validate datepicker ignorar" placeholder="DATA_MOVIMENTACAO">
+    </div>
+    <a class="btn col s2 right" style="margin-top: 2%;">Movimentar</a>
+</form>
+
+{% endblock %}
+{% block script%}
+trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
+trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
+{% endblock %}
