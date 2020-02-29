@@ -8,6 +8,7 @@ import controle
 import controle_seletor
 import importas
 import user
+import datetime 
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -280,15 +281,43 @@ def movimentacoes():
         ccs = controle.cc()
         meses = controle.mes()
         status = controle.status()
-        agente = controle.agente.buscar_por_id('2')
-        return render_template('movimentacao.html' , setores = setores, ccs = ccs, meses = meses, status = status, agente = agente)
+        agente = controle.agente.buscar_por_id(request.args.get('id'))
+        jornadas = controle.jornada()
+        ccs = controle.cc()
+        return render_template('movimentacao.html' , setores = setores, ccs = ccs, meses = meses, status = status, agente = agente, jornadas = jornadas)
 
-    agente = controle.agente.dict_to_agente(controle.agente.buscar_por_id(request.form['ID']))
+    agente = controle.dict_to_agente(controle.agente.buscar_por_id( request.form['ID']))
+
+    
+    controle.movimentacao(
+    agente.cad,
+    agente.mes_ano,
+    agente.nome,
+    agente.setor,
+    agente.cargo,
+    agente.funcao,
+    agente.status,
+    agente.cc,
+    agente.jornada,
+    request.form['setor'],
+    request.form['cargo'],
+    request.form['funcao'],
+    request.form['jornada'],
+    request.form['cc'],
+    request.form['movimentacao'],
+    request.form['dtm'])
     agente.nvl = request.form['nvl']
     agente.setor = request.form['setor']
-    agente.nvl = request.form['funcao']
-    agente.nvl = request.form['cargo']
-    controle.agente.atualizar()
+    agente.funcao = request.form['funcao']
+    agente.cargo = request.form['cargo']
+    agente.jornada = request.form['jornada']
+    if request.form['movimentacao'] == 'DESLIGADO':
+        agente.status  = 'DESLIGADO'
+    agente.atualizar(request.form['id'])
+
+    flash ('Operacao realizada com sucesso')
+        
+    return redirect(url_for('agentes')) 
 
 if __name__ == "__main__":
     app.run(debug=True)

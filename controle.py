@@ -22,28 +22,6 @@ class agente():
         self.data_adm =data_adm
         self.data_desligamento = data_desligamento
         self.status = status
-        
-    @staticmethod
-    def dict_to_agente(dicionario):
-        return agente(
-        dicionario['CAD'],
-        dicionario['NOME'],
-        dicionario['RAMAL'],
-        dicionario['PAUSA'],
-        dicionario['CELULAR'],
-        dicionario['MONITORIA'],
-        dicionario['CC'],
-        dicionario['SETOR'],
-        dicionario['CARGO'],
-        dicionario['FUNCAO'],
-        dicionario['NVL'],
-        dicionario['GESTOR'],
-        dicionario['JORNADA'],
-        dicionario['SAB'],
-        dicionario['MES_ANO'],
-        dicionario['DATA_ADM'],
-        dicionario['DATA_DESLIGAMENTO'],
-        dicionario['STATUS'])
 
     @staticmethod
     def buscar_por_id(ID):
@@ -94,6 +72,7 @@ class agente():
                                  self.data_desligamento,
                                  self.status
                              )
+        print(SQL)
         return ado.executar(SQL)
 
 
@@ -255,3 +234,83 @@ def buscar_importados():
     SQL = "SELECT * FROM NC_USER WHERE STATUS = 'i'"
     return ado.buscar(cmd_sql=SQL)
 
+def movimentacao(matricula,mes_ano,nome,setor_antigo,cargo_antigo,funcao_antigo,status_antigo, cc_antigo, jornada_antigo,setor_novo,cargo_novo,funcao_novo,jornada_novo,cc_novo,movimentacao,data):
+    SQL = """INSERT INTO NC_MOVIMENTACOES_DESLIGAMENTO
+    (MATRICULA,
+    MES_ANO,
+    NOME,
+    SETOR_ANTIGO,
+    CARGO_ANTIGO,
+    FUNCAO_ANTIGO,
+    CC_ANTIGO,
+    JORNADA_ANTIGO,
+    STATUS_ANTIGO,
+    SETOR_NOVO,
+    CARGO_NOVO,
+    FUNCAO_NOVO,
+    CC_NOVO,
+    JORNADA_NOVO,
+    MOVIMENTACAO,
+    DATA_MOVIMENTACAO)
+    VALUES(
+        {MATRICULA},
+        '{MES_ANO}',
+        '{NOME}',
+        '{SETOR_ANTIGO}',
+        '{CARGO_ANTIGO}',
+        '{FUNCAO_ANTIGO}',
+        '{CC_ANTIGO}',
+        '{JORNADA_ANTIGO}',
+        '{STATUS_ANTIGO}',
+        '{SETOR_NOVO}',
+        '{CARGO_NOVO}',
+        '{FUNCAO_NOVO}',
+        '{CC_NOVO}',
+        '{JORNADA_NOVO}',
+        '{MOVIMENTACAO}',
+        '{DATA}'      
+        )""".format(MATRICULA = matricula, 
+        MES_ANO = mes_ano,
+        NOME = nome, 
+        SETOR_ANTIGO = setor_antigo, 
+        CARGO_ANTIGO = cargo_antigo, 
+        FUNCAO_ANTIGO = funcao_antigo,
+        CC_ANTIGO = cc_antigo,
+        JORNADA_ANTIGO = jornada_antigo  ,
+        STATUS_ANTIGO = status_antigo,
+        SETOR_NOVO = setor_novo,
+        CARGO_NOVO = cargo_novo,
+        FUNCAO_NOVO = funcao_novo,
+        CC_NOVO = cc_novo,
+        JORNADA_NOVO = jornada_novo,
+        MOVIMENTACAO = movimentacao,
+        DATA = data
+         )
+    try:
+        print(SQL)
+        return ado.executar(SQL)
+    except:
+        print('erro ao fazer a operacao')
+        return False
+
+
+def dict_to_agente(dicionario):
+    return agente(
+    dicionario['CAD'],
+    dicionario['NOME'],
+    dicionario['RAMAL'],
+    dicionario['PAUSAS'],
+    dicionario['CELULAR'],
+    dicionario['MONITORIA'],
+    dicionario['CC'],
+    dicionario['SETOR'],
+    dicionario['CARGO'],
+    dicionario['FUNCAO'],
+    dicionario['NVL'],
+    dicionario['GESTOR'],
+    dicionario['JORNADA'],
+    dicionario['SAB'],
+    dicionario['MES_ANO'],
+    dicionario['DATA_ADM'],
+    dicionario['DATA_DESLIGAMENTO'],
+    dicionario['STATUS'])

@@ -3,35 +3,44 @@
 {%block conteudo%}
 
 <h1 class="red-text">MOVIMENTACAO</h1>
-<form class="row" action="{{url_for('copiar_mes')}}" method="POST">
+<ul class="erros red-text"></ul>
+<form class="row formulario" action="{{url_for('movimentacoes')}}" method="POST">
     <input type="hidden" name="ID" value="{{agente['ID']}}" >
     <div class="col s2">
         <label for="">MATRICULA</label>
-        <input type="text" name="" value="{{agente['CAD']}}" >
+        <input type="text"  value="{{agente['CAD']}}" >
     </div>
     <div class="col s2">
         <label for="">NOME</label>
-        <input type="text" name="" value="{{agente['NOME']}}"  >
+        <input type="text"  value="{{agente['NOME']}}"  >
     </div>
     <div class="col s2">
         <label for="">MES ANO</label>
-        <input type="text" name=""  value="{{agente['MES_ANO']}}">
+        <input type="text"   value="{{agente['MES_ANO']}}">
     </div>
     <div class="col s2">
         <label for="">SETOR_ANTIGA</label>
-        <input type="text" name="" value="{{agente['SETOR']}}">
+        <input type="text"  value="{{agente['SETOR']}}">
     </div>
     <div class="col s2">
         <label for="">CARGO_ANTIGA</label>
-        <input type="text" name="" value="{{agente['CARGO']}}">
+        <input type="text"  value="{{agente['CARGO']}}">
     </div>
     <div class="col s2">
         <label for="">FUNCAO_ANTIGA</label>
-        <input type="text" name="" value="{{agente['FUNCAO']}}" >
+        <input type="text"  value="{{agente['FUNCAO']}}" >
     </div>
     <div class="col s2">
-        <label for="">FUNCAO_ANTIGA</label>
-        <input type="text" name="" value="{{agente['NVL']}}" >
+        <label for="">NVL</label>
+        <input type="text" value="{{agente['NVL']}}" >
+    </div>
+    <div class="col s2">
+        <label for="">CC ANTIGO</label>
+        <input type="text" value="{{agente["CC"]}}" >
+    </div>
+    <div class="col s2">
+        <label for="">JORNADA ANTIGA</label>
+        <input type="text" value="{{agente["JORNADA"]}}" >
     </div>
     <div class="col s2">
         <label>SETOR</label>
@@ -63,29 +72,51 @@
           <option value="OPE">OPE</option>
         </select>
       </div>
-    <div class="input-field col s2">
-        <label for="">STATUS_ANTIGO</label>
-        <input type="text" name="" value="{{agente['STATUS']}}">
+      <div class="input-field col s2">
+        <select id='jornada' name="jornada">
+          <label>Jornada</label>
+          <option value="{{agente["JORNADA"]}}" selected>{{agente["JORNADA"]}}</option>
+          {% for item in jornadas %}
+          <option value="{{item["JORNADA"]}}">{{item["JORNADA"]}}</option>
+          {% endfor %}
+        </select>
       </div>
       <div class="input-field col s2">
-        <select id='status' name="status" class="">
-            <label>Status</label>
-            <option value="" selected>NOVO STATUS</option>
+        <select id='cc' name="cc">
+          <label>CC</label>
+          <option value="" >CC</option>
+          {% for item in ccs %}
+          <option value="{{item["CC"]}}">{{item["CC"]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-field col s2">
+        <select id='status' name="movimentacao" class="">
+            <label>MOVIMENTACAO</label>
+            <option value="" selected>MOVIMENTACAO</option>
+            <option value="DESLIGADO">DESLIGADO</option>
             <option value="PROMOVIDO">PROMOVIDO</option>
-            {% for item in status %}
-            <option value="{{item["STATUS"]}}">{{item["STATUS"]}}</option>
-            {% endfor %}
+            <option value="HORARIO">HORARIO</option>
+            <option value="CC">CC</option>
           </select>
       </div>
     <div class="input-fild col s2">
         <label for="data">DATA_MOVIMENTACAO</label>
-        <input type="text" id="dms" name="dms" class="validate datepicker ignorar" placeholder="DATA_MOVIMENTACAO">
+        <input type="text" id="dtm" name="dtm" class="validate datepicker ignorar" placeholder="DATA_MOVIMENTACAO">
     </div>
-    <a class="btn col s2 right" style="margin-top: 2%;">Movimentar</a>
+    <button class="btn col s2 right enviar" style="margin-top: 2%;">Movimentar</button>
 </form>
+
+
 
 {% endblock %}
 {% block script%}
+    $('.enviar').click(function (e) {
+        event.preventDefault();
+        if (valida_form('ignorar')) {
+            $('.formulario').submit()
+        }
+        })
 trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
 trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
 {% endblock %}
