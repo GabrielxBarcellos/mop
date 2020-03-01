@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{%block conteudo%}
+<table class="responsive-table striped">
+    <thead>
+      <tr>
+        {% for item in keys %}
+        <th>
+          {{ item }}
+        </th>
+        {% endfor %}
+        <th></th>
+        <th></th>
+  
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" placeholder="NOVO" disabled>  
+        </td>
+        <td>
+          <input type="text" placeholder="JORNADA">  
+        </td>
+        <td>
+          <input type="text" placeholder="HRS">  
+        </td>
+        <td>
+          <input type="text" placeholder="TURNO">  
+        </td>
+        <td class="row">
+          <a class="waves-effect waves-light btn green col s8 btn-jornada"><i class="material-icons left">keyboard_arrow_right</i>criar</a>
+        </td>
+        <td></td>
+      </tr>
+      {% for item in jornadas %}
+      <tr id_banco = '{{item["ID"]}}'>
+        {% for subitem in item.values() %}
+        <td><input type="text" value="{{subitem}}"></td>
+        {% endfor %}
+        <td>
+          <a class="waves-effect waves-light btn orange btn-jornada" id_banco = '{{item["ID"]}}'><i class="material-icons left">loop</i>atualizar</a>
+        </td>
+        <td>
+          <a class="waves-effect waves-light btn red btn-jornada-deletar" id_banco = '{{item["ID"]}}'><i class="material-icons left">delete</i>deletar</a>
+        </td>
+      </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+  {% endblock %}
+
+  {% block script %}
+  $('.btn-jornada').click(function () {
+    jornadas = []
+    $.each($(this).closest('tr').find('input'), function (indexInArray, valueOfElement) {
+        jornadas.push($(valueOfElement).val())
+    });
+    var obj = jornadas
+    console.log(obj)
+    $.ajax({
+      url: '{{url_for('jornadas_select')}}',
+      data: {data: JSON.stringify(obj)},
+      type: 'POST',
+      success: function(response){
+        alert(response)
+        document.location.reload(true);
+      }
+      })
+  
+    })
+  
+    $('.btn-jornada-deletar').click(function () {
+  
+      if (confirm("Tem certeza que deseja deletar?")){
+      var obj = $(this).attr('id_banco')
+      console.log(obj)
+      $.ajax({
+        url: '{{url_for('jornada_deletar')}}',
+        data: {data: JSON.stringify(obj)},
+        type: 'POST',
+        success: function(response){
+          alert(response)
+          document.location.reload(true);
+        }
+        })
+      }
+    
+      
+      })
+  {% endblock %}

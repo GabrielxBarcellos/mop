@@ -15,6 +15,7 @@ def conn():
     password = credenciais["password"]
     cnxn = pyodbc.connect(
         'DRIVER={SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+    
     return cnxn
 
 

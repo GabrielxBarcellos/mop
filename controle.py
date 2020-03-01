@@ -314,3 +314,25 @@ def dict_to_agente(dicionario):
     dicionario['DATA_ADM'],
     dicionario['DATA_DESLIGAMENTO'],
     dicionario['STATUS'])
+
+def movimentacoes():
+    movimentacoes = ado.buscar(table="NC_MOVIMENTACOES_DESLIGAMENTO")
+    if len(movimentacoes) == 0  : 
+        movimentacoes = [{"SEM RESULTADO":"SEM RESULTADO"}]
+    return movimentacoes
+
+def atualizar_movimentacao(feito, id_movimentacao):
+    SQL = """
+    UPDATE NC_MOVIMENTACOES_DESLIGAMENTO
+    SET 
+        FEITO = {}
+    WHERE
+        ID = {}""".format(feito, id_movimentacao)
+    print(SQL)
+    return ado.executar(SQL)
+
+def jornadas():
+    jornadas =ado.buscar(table='NC_JORNADA') 
+    if len(jornadas) == 0  : 
+        jornadas = [{"SEM RESULTADO":"SEM RESULTADO"}]
+    return jornadas

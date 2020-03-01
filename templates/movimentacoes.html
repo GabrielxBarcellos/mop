@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+<h1 class="red-text">Movimentações</h1>
+<a class="waves-effect waves-light btn right" id = "download"><i class="material-icons left">file_download</i>DOWNLOAD</a>
+<table class="responsive-table striped">
+    <tr>
+        {% for item in keys %}
+        <th></th>
+        <th>
+          {{ item }}
+        </th>
+        {% endfor %}
+      </tr>
+      {% for item in movimentacoes %}
+      <tr>
+        <td>        
+        {% if item["FEITO"] == True  %}
+        <label>
+            <input type="checkbox" checked="checked" id ='{{item["ID"]}}'/>
+            <span></span>
+        </label>
+        {% else %}
+        <label>
+            <input type="checkbox"  id ='{{item["ID"]}}'/>
+            <span></span>
+        </label>
+        {% endif %}
+        </td>
+        {% for subitem in item.values() %}
+        <td>{{subitem }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+</table>
+
+{% endblock %}
+
+
+
+
+
+{% block script %}
+    $('#download').click(function(){
+        var texto = ""
+        $.each($('tr'), function (indexInArray, valueOfElement) {
+        $.each($(valueOfElement).children(), function (indexInArray, valueOfElement) {
+        
+        console.log($(valueOfElement).hasClass('ignora'))
+        if (!($(valueOfElement).hasClass('ignora'))){
+            texto = texto + ($(valueOfElement).text().trim()) +";"
+        }
+        });
+        console.log('pula linha')
+        texto = texto + "\n"
+        });
+        download_csv(texto)
+        })
+
+    $('[type=checkbox]').click( function(){
+        id = $(this).prop('id')
+
+        if ($(this).prop('checked') == true){
+            feito = 1
+        }else{
+            feito = 0
+        }
+        console.log(feito)
+        console.log($(this).prop('checked')) 
+        obj = {
+            'id' : id,
+            'feito':feito
+        }
+        $.ajax({
+            url: '{{url_for('movimentacoes_lista')}}',
+            data: obj,
+            type: 'POST',
+            success: function(){
+              document.location.reload(true);
+            }
+            })
+    }
+    )
+{% endblock %}

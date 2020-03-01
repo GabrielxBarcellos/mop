@@ -232,7 +232,7 @@ def copiar_mes(mes_antigo, mes_novo,pasta_backup):
         
         campos = campos[:len(campos)-1]
 
-        SQL = SQL + campos +  ", '{}' MES_ANO  FROM NC_MOP WHERE MES_ANO = '{}'".format(mes_novo,mes_antigo)
+        SQL = SQL + campos +  ", '{}' MES_ANO  FROM NC_MOP WHERE MES_ANO = '{}' AND STATUS != 'DESLIGADO'".format(mes_novo,mes_antigo)
         SQL_INSERT = "INSERT INTO NC_MOP ("+campos+", MES_ANO) " + SQL
         ado.executar(SQL_INSERT)
         return True

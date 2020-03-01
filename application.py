@@ -6,6 +6,7 @@ import os
 import json
 import controle
 import controle_seletor
+import controle_jornadas
 import importas
 import user
 import datetime 
@@ -45,8 +46,8 @@ def login():
             session['MATRICULA'] = usuario['MATRICULA']
             session['NV'] = usuario['NV']
             return render_template('home.html')
-        except:
-            flash('problema ao logar')
+        except Exception as e:
+            flash(e)
             return render_template('login.html')
 
 @app.route('/logout')
@@ -264,6 +265,7 @@ def trocar_senha():
     return "Senha trocada :)"
 
 @app.route('/copiar_mes',methods=['POST','GET'])
+@nvl_adm
 def copiar_mes():
 
     meses = controle.mes()
@@ -273,6 +275,33 @@ def copiar_mes():
     importas.copiar_mes(request.form['mes_antigo'],request.form['mes_novo'],app.config['UPLOAD_FOLDER'])
     flash('MES COPIADO')
     return render_template('copiar_mes.html', meses = meses)
+
+
+@app.route('/jornada' , methods=['POST','GET'])
+@nvl_adm
+def jornadas_select():
+    if request.method =='GET':
+        jornadas = controle.jornadas()
+        return render_template('jornada.html' , jornadas = jornadas, keys = jornadas[0].keys() ) 
+    
+    jornada = json.loads(request.form['data'])
+    controle_jornadas.jornada_novo_update(jornada)
+    return "Jornada incluído/modificado"
+
+@app.route('/jornada_deletar',methods=['POST'])
+@nvl_adm
+def jornada_deletar():
+    controle_jornadas.deletar_jornada(json.loads(request.form['data']))
+    return "jornada deletada"    
+
+@app.route('/movimentacoes',methods=['POST','GET'])
+def movimentacoes_lista():
+    if request.method == 'GET':
+        movimentacoes =  controle.movimentacoes()
+        return render_template('movimentacoes.html', movimentacoes = movimentacoes, keys = movimentacoes[0].keys() )
+    
+    controle.atualizar_movimentacao(request.form['feito'],request.form['id'])
+    return redirect ( url_for('movimentacoes_lista'))
 
 @app.route('/movimentacao', methods = ['POST','GET'])
 def movimentacoes():
@@ -286,9 +315,7 @@ def movimentacoes():
         ccs = controle.cc()
         return render_template('movimentacao.html' , setores = setores, ccs = ccs, meses = meses, status = status, agente = agente, jornadas = jornadas)
 
-    agente = controle.dict_to_agente(controle.agente.buscar_por_id( request.form['ID']))
-
-    
+    agente = controle.dict_to_agente(controle.agente.buscar_por_id( request.form['ID']))    
     controle.movimentacao(
     agente.cad,
     agente.mes_ano,
@@ -313,7 +340,7 @@ def movimentacoes():
     agente.jornada = request.form['jornada']
     if request.form['movimentacao'] == 'DESLIGADO':
         agente.status  = 'DESLIGADO'
-    agente.atualizar(request.form['id'])
+    agente.atualizar(request.form['ID'])
 
     flash ('Operacao realizada com sucesso')
         

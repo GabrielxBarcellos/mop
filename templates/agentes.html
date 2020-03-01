@@ -2,13 +2,7 @@
 
 
 {% block style %}
-table{
 
-display: block;
-max-width: 100%;
-overflow: auto;
-font-size: .9em;
-}
 {% endblock %}
 
 {%block conteudo%}
@@ -229,10 +223,6 @@ font-size: .9em;
 
 {% block script %}
 
-
-
-
-
 $('#download').click(function(){
 var texto = ""
 $.each($('tr'), function (indexInArray, valueOfElement) {
@@ -255,6 +245,5 @@ $('.delete-btn').click(function(e){
       $(this).parent().submit()
   }
 })
-
 
 {% endblock %}
