@@ -6,15 +6,15 @@
 <table class="responsive-table striped">
     <tr>
         {% for item in keys %}
-        <th></th>
+        <th class="ignora"></th>
         <th>
           {{ item }}
         </th>
         {% endfor %}
       </tr>
       {% for item in movimentacoes %}
-      <tr>
-        <td>        
+      <tr  >
+        <td class="ignora">        
         {% if item["FEITO"] == True  %}
         <label>
             <input type="checkbox" checked="checked" id ='{{item["ID"]}}'/>

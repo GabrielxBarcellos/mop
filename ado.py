@@ -1,5 +1,6 @@
 import pyodbc
 import json
+import platform
 
 def json_config():
     with open("dados.json", "r") as read_file:
@@ -13,8 +14,11 @@ def conn():
     database = credenciais["database"]
     username = credenciais["username"]
     password = credenciais["password"]
+    if 'Windows' in platform.platform():
+        cnxn = pyodbc.connect(
+            'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
     cnxn = pyodbc.connect(
-        'DRIVER={SODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
+        'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password)
     
     return cnxn
 
