@@ -36,15 +36,18 @@ def buscar(table="", cmd_sql="SELECT * FROM "):
     cnxn.close()
     return results
 def executar(SQL):
+        print("teste")
         numero_linhas = 0
         try: 
             cnxn = conn()
             cursor = cnxn.cursor()
-            cursor.execute(SQL)
+            print(cursor.execute(SQL))
             numero_linhas = cursor.rowcount
-            cnxn.commit()
+            print(cnxn.commit())
+            print(numero_linhas)
             cnxn.close()
-        except:
+        except ValueError as err  :
+            print(err)
             return numero_linhas
 
         return numero_linhas

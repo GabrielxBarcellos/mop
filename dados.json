@@ -1,8 +1,8 @@
 {
     "conn":{
-        "server":"gbarcellossilva.database.windows.net",
-        "database" : "SANDBOX",
-        "username" : "gbarcellossilva",
-        "password" : "Red-Hot1996"
+        "server":"bihsb.database.windows.net",
+        "database" : "mop",
+        "username" : "mop_db",
+        "password" : "wWBz%ezI}nl)"
     }
 } 

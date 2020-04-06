@@ -102,16 +102,55 @@
       </div>
     <div class="input-fild col s2">
         <label for="data">DATA_MOVIMENTACAO</label>
-        <input type="text" id="dtm" name="dtm" class="validate datepicker ignorar" placeholder="DATA_MOVIMENTACAO">
+        <input type="text" id="dtm" name="dtm" class="validate datepicker" placeholder="DATA_MOVIMENTACAO">
     </div>
     <button class="btn col s2 right enviar" style="margin-top: 2%;">Movimentar</button>
 </form>
 
 
 
+
+
 {% endblock %}
 {% block script%}
     $('.enviar').click(function (e) {
+
+
+        $('#setor').removeClass('ignorar')
+        $('#funcao').removeClass('ignorar')
+        $('#cargo').removeClass('ignorar')
+        $('#nvl').removeClass('ignorar')
+        $('#jornada').removeClass('ignorar')
+        $('#cc').removeClass('ignorar')
+
+        //ignora os outros campos se for desligado
+        if ($('#status').val()=="DESLIGADO"){
+            $('#setor').addClass('ignorar')
+            $('#funcao').addClass('ignorar')
+            $('#cargo').addClass('ignorar')
+            $('#nvl').addClass('ignorar')
+            $('#jornada').addClass('ignorar')
+            $('#cc').addClass('ignorar')
+            console.log('teste')
+        }
+        //ignora os outros campos se for horario
+        if ($('#status').val()=="HORARIO"){
+            $('#setor').addClass('ignorar')
+            $('#funcao').addClass('ignorar')
+            $('#cargo').addClass('ignorar')
+            $('#nvl').addClass('ignorar')
+            $('#cc').addClass('ignorar')
+            console.log('teste')
+        }
+        //ignora os outros campos se for cc
+        if ($('#status').val()=="CC"){
+            $('#setor').addClass('ignorar')
+            $('#funcao').addClass('ignorar')
+            $('#cargo').addClass('ignorar')
+            $('#nvl').addClass('ignorar')
+            $('#jornada').addClass('ignorar')
+            console.log('teste')
+        }
         event.preventDefault();
         if (valida_form('ignorar')) {
             $('.formulario').submit()
@@ -120,3 +159,7 @@
 trazer_option("#funcao", "FUNCAO",'{{url_for("funcoes")}}',"#setor",null)
 trazer_option("#cargo", "CARGO",'{{url_for("cargos")}}',"#setor","#funcao")
 {% endblock %}
+
+<script>
+
+</script>

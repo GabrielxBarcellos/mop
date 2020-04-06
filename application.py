@@ -105,7 +105,8 @@ def agentes():
         request.form['mes'],
         request.form['adm'],
         request.form['dms'],
-        request.form['status']
+        request.form['status'],
+        None
     ).filtrar()
 
     headers = {'':''}
@@ -135,7 +136,7 @@ def atualizar_agente():
             jornadas = controle.jornada()
             meses = controle.mes()
             status = controle.status()
-            return render_template('agente_atualizar.html',id = request.args.get('id'), status = status,agente = agente, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses)
+            return render_template('agente_atualizar.html',id = request.args.get('id'), status = status,agente = agente, setores =setores, ccs=ccs , gestores = gestores , jornadas = jornadas, meses=meses, )
 
         if request.method == "POST":
             id = request.form['id']
@@ -157,7 +158,8 @@ def atualizar_agente():
             request.form['mes'],
             request.form['adm'],
             request.form['dms'],
-            request.form['status']
+            request.form['status'],
+            request.form['dt_piso']
         ).atualizar(id)
             return redirect(url_for("agentes"))
 
@@ -192,7 +194,8 @@ def cadastrar_operador_post():
         request.form['mes'],
         request.form['adm'],
         request.form['dms'],
-        request.form['status']
+        request.form['status'],
+        request.form['dt_piso']
     ).cadastrar()
     return redirect(url_for('agentes'))
 
@@ -315,7 +318,8 @@ def movimentacoes():
         ccs = controle.cc()
         return render_template('movimentacao.html' , setores = setores, ccs = ccs, meses = meses, status = status, agente = agente, jornadas = jornadas)
 
-    agente = controle.dict_to_agente(controle.agente.buscar_por_id( request.form['ID']))    
+    agente = controle.dict_to_agente(controle.agente.buscar_por_id( request.form['ID']))
+    
     controle.movimentacao(
     agente.cad,
     agente.mes_ano,
@@ -333,11 +337,22 @@ def movimentacoes():
     request.form['cc'],
     request.form['movimentacao'],
     request.form['dtm'])
-    agente.nvl = request.form['nvl']
-    agente.setor = request.form['setor']
-    agente.funcao = request.form['funcao']
-    agente.cargo = request.form['cargo']
-    agente.jornada = request.form['jornada']
+
+
+    if (request.form['movimentacao'] != 'HORARIO' and request.form['movimentacao'] != 'CC' and request.form['movimentacao'] != 'DESLIGADO' ):
+        agente.nvl = request.form['nvl']
+        agente.setor = request.form['setor']
+        agente.funcao = request.form['funcao']
+        agente.cargo = request.form['cargo']
+        agente.cc = request.form['cc']
+        agente.jornada = request.form['jornada']
+
+    if (request.form['movimentacao'] == 'HORARIO'):
+        agente.jornada = request.form['jornada']
+
+    if (request.form['movimentacao'] == 'CC'):
+        agente.cc = request.form['cc']
+
     if request.form['movimentacao'] == 'DESLIGADO':
         agente.status  = 'DESLIGADO'
     agente.atualizar(request.form['ID'])

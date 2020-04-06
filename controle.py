@@ -3,7 +3,7 @@ import csv
 import os
 
 class agente():
-    def __init__(self, cad, nome, ramal ,pausa ,celular, monitoria, cc, setor, cargo, funcao, nvl, gestor, jornada, sab, mes_ano, data_adm, data_desligamento,status):
+    def __init__(self, cad, nome, ramal ,pausa ,celular, monitoria, cc, setor, cargo, funcao, nvl, gestor, jornada, sab, mes_ano, data_adm, data_desligamento,status,dt_piso):
         self.cad = cad
         self.nome = nome
         self.ramal = ramal
@@ -22,6 +22,7 @@ class agente():
         self.data_adm =data_adm
         self.data_desligamento = data_desligamento
         self.status = status
+        self.dt_piso = dt_piso
 
     @staticmethod
     def buscar_por_id(ID):
@@ -51,8 +52,9 @@ class agente():
         MES_ANO,
         DATA_ADM,
         DATA_DESLIGAMENTO,
-        STATUS) 
-                             VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(
+        STATUS,
+        DT_PISO) 
+                             VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}', '{}')""".format(
                                  self.cad,
                                  self.nome,
                                  self.ramal,
@@ -70,7 +72,8 @@ class agente():
                                  self.mes_ano,
                                  self.data_adm,
                                  self.data_desligamento,
-                                 self.status
+                                 self.status,
+                                 self.dt_piso
                              )
         print(SQL)
         return ado.executar(SQL)
@@ -105,7 +108,8 @@ class agente():
                         MES_ANO = '{MES_ANO}',
                         DATA_ADM ='{DATA_ADM}',
                         DATA_DESLIGAMENTO = '{DATA_DESLIGAMENTO}',
-                        STATUS = '{STATUS}'
+                        STATUS = '{STATUS}',
+                        DT_PISO = '{DT_PISO}'
                 WHERE
                     ID = {id}""".format(
                         CAD= self.cad,
@@ -126,6 +130,7 @@ class agente():
                         DATA_ADM =self.data_adm,
                         DATA_DESLIGAMENTO =self.data_desligamento,
                         STATUS =self.status,
+                        DT_PISO = self.dt_piso,
                         id= id
                     )
 
@@ -313,7 +318,8 @@ def dict_to_agente(dicionario):
     dicionario['MES_ANO'],
     dicionario['DATA_ADM'],
     dicionario['DATA_DESLIGAMENTO'],
-    dicionario['STATUS'])
+    dicionario['STATUS'],
+    None)
 
 def movimentacoes():
     movimentacoes = ado.buscar(table="NC_MOVIMENTACOES_DESLIGAMENTO")
